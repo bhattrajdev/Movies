@@ -3,6 +3,7 @@ import User from "../models/userModel.js";
 
 const protect = async (req, res, next) => {
   let token;
+  console.log(req.headers);
 
   if (
     req.headers.authorization &&
@@ -13,16 +14,16 @@ const protect = async (req, res, next) => {
       console.log(`Received token: ${token}`);
 
       // Verify the token
-    //   const decoded = jwt.verify(token, process.env.JWT_SECRET_CODE);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_CODE);
 
-    //   console.log(`Decoded data:`, decoded);
+      console.log(`Decoded data:`, decoded);
 
+      req.user = await User.findById(decoded.id).select("-password");
 
-    //   req.user = await User.findById(decoded.id).select("-password");
+      console.log(`User found:`, req.user);
 
-    //   console.log(`User found:`, req.user);
-
-    //   next();
+      next();
+      return; // Add a return statement to exit the middleware
     } catch (error) {
       console.error("JWT Verification Error:", error);
       res.status(401);
@@ -33,7 +34,7 @@ const protect = async (req, res, next) => {
   if (!token) {
     res.status(401);
     throw new Error("Not authorized, no token");
-  };
-}
+  }
+};
 
-export {protect}
+export { protect };
