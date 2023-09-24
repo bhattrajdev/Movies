@@ -1,10 +1,11 @@
 import User from "../models/userModel.js";
+import generateToken from "../utils/generateToken.js";
 
 // User login
 const authUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (email && (await user.matchPassword(password))) {
+  if (user && (await user.password ===(req.body.password))) {
     res.json({
       _id: user._id,
       username: user.username,
@@ -17,6 +18,8 @@ const authUser = async (req, res) => {
     throw new Error("Invalid UserName Or Password");
   }
 };
+
+
 
 // getting all the users
 const getUsers = async (req, res) => {
