@@ -5,7 +5,7 @@ import generateToken from "../utils/generateToken.js";
 const authUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (user && (await user.password ===(password))) {
+  if (user && (await user.password) === password) {
     res.json({
       _id: user._id,
       username: user.username,
@@ -19,8 +19,6 @@ const authUser = async (req, res) => {
   }
 };
 
-
-
 // getting all the users
 const getUsers = async (req, res) => {
   const users = await User.find({});
@@ -29,8 +27,8 @@ const getUsers = async (req, res) => {
 
 // getting a single user
 const getUser = async (req, res) => {
+  console.log('hello world');
   const user = await User.findOne(req.params._id);
-  console.log(user);
   if (user) {
     res.status(200);
     res.json(user);
@@ -39,6 +37,7 @@ const getUser = async (req, res) => {
     throw new Error("User not found");
   }
 };
+
 
 
 // deleting a user

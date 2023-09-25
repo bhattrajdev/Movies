@@ -1,40 +1,39 @@
-import jwt from "jsonwebtoken";
-import User from "../models/userModel.js";
+// import jwt from "jsonwebtoken";
+// import User from "../models/userModel.js";
 
-const protect = async (req, res, next) => {
-  let token;
-  console.log(req.headers);
+// const protect = async (req, res, next) => {
+//   console.log(req.headers);
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    try {
-      token = req.headers.authorization.split(" ")[1];
-      console.log(`Received token: ${token}`);
+//   try {
+//     let token;
 
-      // Verify the token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET_CODE);
+//     if (
+//       req.headers.authorization &&
+//       req.headers.authorization.startsWith("Bearer")
+//     ) {
+//       token = req.headers.authorization.split(" ")[1];
+//       console.log(`Received token: ${token}`);
 
-      console.log(`Decoded data:`, decoded);
+//       // Verify the token
+//       const decoded = jwt.verify(token, process.env.JWT_SECRET_CODE);
 
-      req.user = await User.findById(decoded.id).select("-password");
+//       console.log(`Decoded data:`, decoded);
 
-      console.log(`User found:`, req.user);
+//       // Fetch the user based on the decoded ID and exclude the password field
+//       req.user = await User.findById(decoded.id).select("-password");
 
-      next();
-      return; // Add a return statement to exit the middleware
-    } catch (error) {
-      console.error("JWT Verification Error:", error);
-      res.status(401);
-      throw new Error("Not authorized, token failed");
-    }
-  }
+//       console.log(`User found:`, req.user);
 
-  if (!token) {
-    res.status(401);
-    throw new Error("Not authorized, no token");
-  }
-};
+//       next(); // Continue to the next middleware or route handler
+//     } else {
+//       res.status(401);
+//       throw new Error("Not authorized, no token");
+//     }
+//   } catch (error) {
+//     console.error("JWT Verification Error:", error);
+//     res.status(401);
+//     throw new Error("Not authorized, token failed");
+//   }
+// };
 
-export { protect };
+// export { protect };
