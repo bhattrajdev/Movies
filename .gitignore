@@ -9,6 +9,8 @@ node_modules/
 # production
 /build
 
+notes.txt
+
 # misc
 .DS_Store
 .env

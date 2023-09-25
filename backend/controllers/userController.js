@@ -87,4 +87,9 @@ const newUser = async (req, res) => {
   }
 };
 
+
+// updating a user
+
+
+
 export { getUsers, getUser, deleteUser, newUser, authUser };

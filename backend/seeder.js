@@ -1,29 +1,18 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import User from "./models/userModel.js";
+import Movies from "./models/movieModel.js";
 import connectDB from "./config/db.js";
 import { faker } from "@faker-js/faker";
-
 
 dotenv.config();
 
 connectDB();
 
-// deleting all the previous data
-const deletaAll = async () =>{
-    try{
-        await User.deleteMany()
-        console.log('Previous data deleted successfully')
-    }catch(error){
-        console.log(error)
-    }
-}
-
 
 
 const fakeData = async () => {
   try {
-
     // Generate fake user data
     const fakeUsers = Array.from({ length: 10 }, () => {
       const user = {
@@ -42,18 +31,61 @@ const fakeData = async () => {
       return user;
     });
 
-    // Insert the fake user data into the User model
+    // Generate fake data for movies
+    const fakeMovies = Array.from({ length: 40 }, () => {
+      const movie = {
+        title: faker.lorem.words(5),
+        description: faker.lorem.paragraph(),
+        releaseDate: faker.date.past(),
+        genres: [
+          faker.helpers.arrayElement(["Action", "Drama", "Comedy", "Sci-Fi"]),
+        ],
+        directors: [faker.person.fullName()],
+        cast: [
+          faker.person.fullName(),
+          faker.person.fullName(),
+          faker.person.fullName(),
+        ],
+        trailer: faker.internet.url(),
+        poster: faker.image.urlPicsumPhotos(),
+        runningTime: `${faker.number.float({
+          min: 90,
+          max: 180,
+          precision: 0.001,
+        })} minutes`,
+        productionStudio: faker.company.buzzPhrase(),
+      };
+      return movie;
+    });
+
+    // feeding the fake data into the database
     await User.insertMany(fakeUsers);
+    await Movies.insertMany(fakeMovies)
 
     console.log("Fake data inserted successfully");
   } catch (error) {
     console.error("Error seeding data:", error);
-  } 
+  }
 };
 
-// deleting all previous data
-deletaAll()
 
-// calling the function to insert data using loop
-fakeData()
+// deleting  all the previous data and then inserting it
+const deleteAndInsertData = async () => {
+  try {
+    // Delete all previous data
+    await User.deleteMany();
+    await Movies.deleteMany();
+    console.log("Previous data deleted successfully");
 
+    // Generate and insert new fake data
+    await fakeData();
+
+    console.log("Fake data inserted successfully");
+  } catch (error) {
+    console.error("Error seeding data:", error);
+  }
+};
+
+
+
+deleteAndInsertData();
