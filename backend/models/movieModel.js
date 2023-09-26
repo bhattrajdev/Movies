@@ -4,6 +4,7 @@ const movieSchema = mongoose.Schema({
   title: {
     type: String,
     requred: true,
+    unique: true,
   },
   description: {
     type: String,

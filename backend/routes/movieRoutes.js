@@ -1,10 +1,10 @@
-import express from 'expresss'
+import express from "express";
+import { getMovie, getMovies } from "../controllers/movieController.js";
 
+const router = express.Router();
 
-const router = express.router()
+router.route("/").get(getMovies);
 
-router.route('/').get(getMovies)
-
-
+router.route("/:id").get(getMovie)
 
 export default router;
