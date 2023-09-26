@@ -31,40 +31,37 @@ const deleteMovie = async (req, res) => {
 };
 
 
-// Creating a new User
-const newUser = async (req, res) => {
-  const { username, email, password } = req.body;
-  const checkUserName = await User.findOne({ username });
-  const checkEmail = await User.findOne({ email });
+// Creating a new Movie
+// const newMovie = async (req, res) => {
+//   const { title} = req.body;
+ 
 
-  if (checkUserName) {
-    res.json({
-      message: "Username already exists !! please choose a new user name",
-    });
-  } else if (checkEmail) {
-    res.json("User already exits");
-  } else {
-    const user = await User.create({
-      username,
-      email,
-      password,
-    });
+//   if (title) {
+//     res.json({
+//       message: "Movie already exists !!",
+//     });
+//   } else{
+//     const user = await User.create({
+//       username,
+//       email,
+//       password,
+//     });
 
-    if (user) {
-      res.status(201).json({
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-        password: user.password,
-        profilePicture: user.profilePicture,
-        isAdmin: user.isAdmin,
-      });
-    } else {
-      res.status(400);
-      throw new Error("Invalid User Data");
-    }
-  }
-};
+//     if (user) {
+//       res.status(201).json({
+//         _id: user._id,
+//         username: user.username,
+//         email: user.email,
+//         password: user.password,
+//         profilePicture: user.profilePicture,
+//         isAdmin: user.isAdmin,
+//       });
+//     } else {
+//       res.status(400);
+//       throw new Error("Invalid User Data");
+//     }
+//   }
+// };
 
 
 
