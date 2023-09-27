@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovie } from "../redux/slices/movie";
 import { useEffect } from "react";
-import { Skeleton } from "@mui/material";
+import Skeleton from "@mui/material/Skeleton";
 
-const Movies = ({ name, onbasisof }) => {
+const Movies = ({ name}) => {
   const dispatch = useDispatch();
 
   const state = useSelector((state) => state);
@@ -17,8 +17,7 @@ const Movies = ({ name, onbasisof }) => {
   useEffect(() => {
     dispatch(fetchMovie());
   }, []);
-  const sortedMovies = Movie.sort((a, b) => b[onbasisof] - a[onbasisof]);
-  const topTenMovies = sortedMovies.slice(0, 10);
+
   var settings = {
     dots: false,
     infinite: false,
@@ -54,42 +53,47 @@ const Movies = ({ name, onbasisof }) => {
     ],
   };
 
-
-  if (state.movie.isLoading) {
-    // return <h1>Loading....</h1>;
-    return  <Skeleton animation="wave" variant="circular" width={40} height={40} />
-  }
-
-  return (
-    
-         <div className=" px-[40px]">
-      <div className="flex justify-between my-4 ">
-        <div className="text-[17px] md:text-[19px] lg:text-[21px]">{name}</div>
-        <button className="text-[14px] md:text-[16px] px-[40px] lg:text-[19px]  hover:text-indigo-500">
-          View More
-        </button>
-      </div>
-      {state.movie.data &&  (
-      <Slider {...settings}>
-        {state.movie.data.map((movie, index) => (
-          <Link to={`MovieDetail/${movie._id}`}>
-            <div key={index} className="w-full px-4 ">
-              <img
-                src={movie.poster}
-                className="w-[85%] h-[350px] z-10"
-                alt={movie.name}
-              />
-              <div className="text-center text-[15px] md:text-[18px] lg:text-[20px] py-2">
-                {movie.title}
-              </div>
-            </div>
-          </Link>
-        ))}
-        </Slider>
-      )}
-     </div>
  
-  );
+    return (
+      <div className=" px-[40px]">
+        <div className="flex justify-between my-4 ">
+          <div className="text-[17px] md:text-[19px] lg:text-[21px]">
+            {name}
+          </div>
+          <button className="text-[14px] md:text-[16px] px-[40px] lg:text-[19px]  hover:text-indigo-500">
+            View More
+          </button>
+        </div>
+        {state.movie.data && (
+          <Slider {...settings}>
+            {state.movie.isLoading ? (
+             Array.from({ length: 10 }).map((_, index) => (
+              <div key={index} className="w-full px-4">
+                <Skeleton animation="wave" height={350} />
+                <Skeleton animation="wave" height={10} width="80%" />
+              </div>
+            ))) : (
+              // Render movie content when data is loaded
+              state.movie.data.slice(0,20).map((movie, index) => (
+                <Link to={`MovieDetail/${movie._id}`} key={index}>
+                  <div className="w-full px-4">
+                    <img
+                      src={movie.poster}
+                      className="w-[85%] h-[350px] z-10"
+                      alt={movie.name}
+                    />
+                    <div className="text-center text-[15px] md:text-[18px] lg:text-[20px] py-2">
+                      {movie.title}
+                    </div>
+                  </div>
+                </Link>
+              ))
+            )}
+          </Slider>
+        )}
+      </div>
+    );
+  
 };
 
 export default Movies;

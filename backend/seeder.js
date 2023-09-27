@@ -32,7 +32,7 @@ const fakeData = async () => {
     });
 
     // Generate fake data for movies
-    const fakeMovies = Array.from({ length: 400 }, () => {
+    const fakeMovies = Array.from({ length: 4000 }, () => {
       const movie = {
         title: faker.lorem.words(5),
         description: faker.lorem.paragraph(),
