@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovie } from "../redux/slices/movie";
 import { useEffect } from "react";
+import { Skeleton } from "@mui/material";
 
 const Movies = ({ name, onbasisof }) => {
   const dispatch = useDispatch();
@@ -55,7 +56,8 @@ const Movies = ({ name, onbasisof }) => {
 
 
   if (state.movie.isLoading) {
-    return <h1>Loading....</h1>;
+    // return <h1>Loading....</h1>;
+    return  <Skeleton animation="wave" variant="circular" width={40} height={40} />
   }
 
   return (
