@@ -1,13 +1,27 @@
-import React from 'react'
-import { Carousel, Movies } from '../components'
-const Home = () => {
-  return (
-   <>
-  <Carousel/>
-  <Movies name="Trending" onbasisof="watchedCount" />
-      <Movies name="This Year" onbasisof="year" />
-   </>
-  )
-}
+import React, { useEffect } from 'react';
+import { Carousel, Movies } from '../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMovies } from '../redux/slices/movie';
 
-export default Home
+const Home = () => {
+  const dispatch = useDispatch();
+  const movies = useSelector((state) => state.movie.data);
+  const loading = useSelector((state) =>state.movie.isLoading)
+ 
+
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch]);
+
+  return (
+    <>
+      <Carousel />
+      {movies &&
+        movies.map((movie) => (
+          <Movies key={movie._id} movie={movie} loading={loading} /> // Provide a unique key
+        ))}
+    </>
+  );
+};
+
+export default Home;

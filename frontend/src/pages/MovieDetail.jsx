@@ -1,61 +1,75 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AiOutlinePlus, AiOutlineCheck } from 'react-icons/ai';
+import { fetchMovie } from '../redux/slices/movie';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
 const MovieDetail = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const movieData = useSelector((state) => state.movie.data); // Access movie data from the Redux store
+
+  useEffect(() => {
+    dispatch(fetchMovie(id));
+  }, [dispatch, id]);
+
   return (
-    <div className="bg-cover bg-no-repeat bg-center relative mt-[-64px]">
-      <img
-        src="/images/endgame_banner.png"
-        alt="Avengers Endgame"
-        className="w-full h-screen blur-sm"
-      />
+    <>
+      {movieData ? (
+        <div className="bg-cover bg-no-repeat bg-center relative mt-[-64px]">
+          <img
+            src={movieData.poster}
+            alt="Avengers Endgame"
+            className="w-full h-screen blur-sm"
+          />
 
-      <div className="w-full h-full absolute inset-0 bg-gradient-to-b from-transparent via-black to-black opacity-80" />
+          <div className="w-full h-full absolute inset-0 bg-gradient-to-b from-transparent via-black to-black opacity-80" />
 
-      <div className="absolute inset-0 flex flex-col lg:flex-row lg:justify-center lg:items-center text-white">
-        <img src="/images/endgame.jpg" className="w-[300px]" />
-        <div className="max-w-screen-md p-8">
-          <h1 className="text-5xl font-bold mb-4">Avengers: Endgame</h1>
+          <div className="absolute inset-0 flex flex-col lg:flex-row lg:justify-center lg:items-center text-white">
+            <img src={movieData.poster} className="w-[300px]" />
+            <div className="max-w-screen-md p-8">
+              <h1 className="text-5xl font-bold mb-4">{movieData.title}</h1>
 
-          <div className="text-lg mb-4">
-            <p className="flex items-center">
-              <AiOutlinePlus className="mr-2 text-xl" />
-              Year of Release: 2019
-            </p>
-            <p className="flex items-center">
-              <AiOutlineCheck className="mr-2 text-xl" />
-              Ratings: ★★★★☆
-            </p>
-          </div>
+              <div className="text-lg mb-4">
+                <p className="flex items-center">
+                  <AiOutlinePlus className="mr-2 text-xl" />
+                  {movieData.releaseDate}
+                </p>
+                <p className="flex items-center">
+                  <AiOutlineCheck className="mr-2 text-xl" />
+                  Ratings: ★★★★☆
+                </p>
+              </div>
 
-          <p className="text-gray-300 mb-4">
-            After the devastating events of Avengers: Infinity War, the universe
-            is in ruins. With the help of remaining allies, the Avengers assemble
-            once more in order to reverse Thanos' actions and restore balance to the universe.
-          </p>
+              <p className="text-gray-300 mb-4">
+                {movieData.description}
+              </p>
 
-          <div className="text-lg mb-4">
-            <p>Cast: Robert Downey Jr., Chris Evans, Scarlett Johansson, ...</p>
-          </div>
+              <div className="text-lg mb-4">
+                <p>Cast: {movieData.cast.join(', ')}</p>
+              </div>
 
-          <div className="flex space-x-4">
-            <a
-              href="#"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-            >
-              Watch Trailer
-            </a>
-            <a
-              href="#"
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-            >
-              Watch Movie
-            </a>
+              <div className="flex space-x-4">
+                <a
+                  href="#"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                >
+                  Watch Trailer
+                </a>
+                <a
+                  href="#"
+                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                >
+                  Watch Movie
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <h2>Loading</h2>
+      )}
+    </>
   );
 };
 
