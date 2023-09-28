@@ -31,6 +31,15 @@ const icons = [
   <FaFireAlt />,
 ];
 
+const asideLinks = [
+  '/',
+  '/',
+  '/trending',
+  '/',
+  '/',
+  
+]
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -195,7 +204,9 @@ const Navbar = () => {
       >
         <List sx={{ marginTop: "70px", fontWeight: "500" }}>
           {["HOME", "FOR YOU", "TRENDING", "LATEST"].map((text, index) => (
+            
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
+              <Link to={asideLinks[index]}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -219,7 +230,7 @@ const Navbar = () => {
                   {icons[index]}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
+              </ListItemButton></Link>
             </ListItem>
           ))}
         </List>
