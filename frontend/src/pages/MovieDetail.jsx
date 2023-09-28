@@ -2,16 +2,20 @@ import React, { useEffect } from "react";
 import { AiOutlinePlus, AiOutlineCheck } from "react-icons/ai";
 import { fetchMovie } from "../redux/slices/movie";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
+import { Loading } from "../components";
 
 const MovieDetail = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
+  const id = useParams().id;
+  console.log(id)
+  
+    const dispatch = useDispatch();
   const movieData = useSelector((state) => state.movie.data); // Access movie data from the Redux store
+  console.log(movieData)
 
   useEffect(() => {
     dispatch(fetchMovie(id));
-  }, [id]);
+  }, [dispatch,id]);
 
   return (
     <>
@@ -66,7 +70,7 @@ const MovieDetail = () => {
           </div>
         </div>
       ) : (
-        <h2>Loading</h2>
+        <Loading/>
       )}
     </>
   );

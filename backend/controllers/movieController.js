@@ -6,9 +6,12 @@ const movies = await Movies.find({})
 res.json(movies)
 }
 
+
+
+
 // to get a movie
 const getMovie = async (req, res) => {
-  const movie = await Movies.findOne(req.params._id);
+  const movie = await Movies.findById(req.params.id);
   if (movie) {
     res.status(200);
     res.json(movie);

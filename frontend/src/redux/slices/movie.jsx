@@ -9,16 +9,16 @@ export const fetchMovies = createAsyncThunk("fetchMovies", async () => {
 
 
 // to fetch a single movie
-export const fetchMovie = createAsyncThunk("fetchMovie",async(Id)=>{
-  const response = await axios.get(`http://localhost:5000/movies/${Id}`)
+export const fetchMovie = createAsyncThunk("fetchMovie",async(id)=>{
+  const response = await axios.get(`http://localhost:5000/movies/${id}`)
   return response.data;
-})
+});
 
 const movie = createSlice({
   name: "movie",
   initialState: {
     isLoading: false,
-    data: [],
+    data: null,
   },
   extraReducers: (builder) => {
     builder
