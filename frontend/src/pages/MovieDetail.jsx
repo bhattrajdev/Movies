@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { AiOutlinePlus, AiOutlineCheck } from 'react-icons/ai';
-import { fetchMovie } from '../redux/slices/movie';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import React, { useEffect } from "react";
+import { AiOutlinePlus, AiOutlineCheck } from "react-icons/ai";
+import { fetchMovie } from "../redux/slices/movie";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -11,7 +11,7 @@ const MovieDetail = () => {
 
   useEffect(() => {
     dispatch(fetchMovie(id));
-  }, [dispatch, id]);
+  }, [id]);
 
   return (
     <>
@@ -41,12 +41,11 @@ const MovieDetail = () => {
                 </p>
               </div>
 
-              <p className="text-gray-300 mb-4">
-                {movieData.description}
-              </p>
+              <p className="text-gray-300 mb-4">{movieData.description}</p>
 
               <div className="text-lg mb-4">
-                <p>Cast: {movieData.cast.join(', ')}</p>
+                {/* <p>Cast: {movieData.cast.join(', ')}</p>  */}
+                // cause of the error
               </div>
 
               <div className="flex space-x-4">

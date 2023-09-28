@@ -18,7 +18,7 @@ const movie = createSlice({
   name: "movie",
   initialState: {
     isLoading: false,
-    data: null,
+    data: [],
   },
   extraReducers: (builder) => {
     builder
@@ -32,7 +32,7 @@ const movie = createSlice({
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         console.log("Error fetching movies", action.error);
-        state.isError = true;
+       const error =  state.isError = true;
       })
 
       // for a single movie
