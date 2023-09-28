@@ -33,10 +33,7 @@ const icons = [
 
 const asideLinks = [
   '/',
-  '/',
-  '/trending',
-  '/',
-  '/',
+
   
 ]
 

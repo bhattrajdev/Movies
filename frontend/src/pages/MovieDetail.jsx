@@ -7,13 +7,13 @@ import { Loading } from "../components";
 
 const MovieDetail = () => {
   const id = useParams().id;
-  
-    const dispatch = useDispatch();
-  const movieData = useSelector((state) => state.movie.data); 
+
+  const dispatch = useDispatch();
+  const movieData = useSelector((state) => state.movie.data);
 
   useEffect(() => {
     dispatch(fetchMovie(id));
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   return (
     <>
@@ -21,14 +21,14 @@ const MovieDetail = () => {
         <div className="bg-cover bg-no-repeat bg-center relative mt-[-64px]">
           <img
             src={movieData.poster}
-            alt="Avengers Endgame"
+            alt={movieData.title}
             className="w-full h-screen blur-sm"
           />
 
           <div className="w-full h-full absolute inset-0 bg-gradient-to-b from-transparent via-black to-black opacity-80" />
 
           <div className="absolute inset-0 flex flex-col lg:flex-row lg:justify-center lg:items-center text-white">
-            <img src={movieData.poster} className="w-[300px]" />
+            <img src={movieData.poster} className="w-[300px]" alt={movieData.title} />
             <div className="max-w-screen-md p-8">
               <h1 className="text-5xl font-bold mb-4">{movieData.title}</h1>
 
@@ -46,8 +46,30 @@ const MovieDetail = () => {
               <p className="text-gray-300 mb-4">{movieData.description}</p>
 
               <div className="text-lg mb-4">
-                {/* <p>Cast: {movieData.cast.join(', ')}</p>  */}
-                // cause of the error
+                <p>
+                  <strong>Genre:</strong>{" "}
+                  {Array.isArray(movieData.genres)
+                    ? movieData.genres.join(", ")
+                    : movieData.genres}
+                </p>
+              </div>
+
+              <div className="text-lg mb-4">
+                <p>
+                  <strong>Cast:</strong>{" "}
+                  {Array.isArray(movieData.cast)
+                    ? movieData.cast.join(", ")
+                    : movieData.cast}
+                </p>
+              </div>
+
+              <div className="text-lg mb-4">
+                <p>
+                  <strong>Directors:</strong>{" "}
+                  {Array.isArray(movieData.directors)
+                    ? movieData.directors.join(", ")
+                    : movieData.directors}
+                </p>
               </div>
 
               <div className="flex space-x-4">
@@ -68,7 +90,7 @@ const MovieDetail = () => {
           </div>
         </div>
       ) : (
-        <Loading/>
+        <Loading />
       )}
     </>
   );
