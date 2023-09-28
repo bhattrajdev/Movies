@@ -14,7 +14,6 @@ const Movies = ({movie}) => {
         {movie.title}
        </div>
     </div>
-      <div>Movies</div>
   </Link>
   );
 };

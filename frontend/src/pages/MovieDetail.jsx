@@ -4,6 +4,7 @@ import { fetchMovie } from "../redux/slices/movie";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Loading } from "../components";
+import { BiSolidMoviePlay, BiSolidCameraMovie } from "react-icons/bi";
 
 const MovieDetail = () => {
   const id = useParams().id;
@@ -28,11 +29,17 @@ const MovieDetail = () => {
           <div className="w-full h-full absolute inset-0 bg-gradient-to-b from-transparent via-black to-black opacity-80" />
 
           <div className="absolute inset-0 flex flex-col lg:flex-row lg:justify-center lg:items-center text-white">
-            <img src={movieData.poster} className="w-[300px]" alt={movieData.title} />
-            <div className="max-w-screen-md p-8">
-              <h1 className="text-5xl font-bold mb-4">{movieData.title}</h1>
+            <img
+              src={movieData.poster}
+              className="w-[300px] lg:w-[400px] xl:w-[500px] 2xl:w-[600px]"
+              alt={movieData.title}
+            />
+            <div className="max-w-screen-md p-4 lg:p-8 xl:p-12 2xl:p-16">
+              <h1 className="text-3xl lg:text-5xl font-bold mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
+                {movieData.title}
+              </h1>
 
-              <div className="text-lg mb-4">
+              <div className="text-base lg:text-lg mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
                 <p className="flex items-center">
                   <AiOutlinePlus className="mr-2 text-xl" />
                   {movieData.releaseDate}
@@ -43,9 +50,11 @@ const MovieDetail = () => {
                 </p>
               </div>
 
-              <p className="text-gray-300 mb-4">{movieData.description}</p>
+              <p className="text-gray-300 text-sm lg:text-base mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
+                {movieData.description}
+              </p>
 
-              <div className="text-lg mb-4">
+              <div className="text-base lg:text-lg mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
                 <p>
                   <strong>Genre:</strong>{" "}
                   {Array.isArray(movieData.genres)
@@ -54,7 +63,7 @@ const MovieDetail = () => {
                 </p>
               </div>
 
-              <div className="text-lg mb-4">
+              <div className="text-base lg:text-lg mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
                 <p>
                   <strong>Cast:</strong>{" "}
                   {Array.isArray(movieData.cast)
@@ -63,7 +72,7 @@ const MovieDetail = () => {
                 </p>
               </div>
 
-              <div className="text-lg mb-4">
+              <div className="text-base lg:text-lg mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
                 <p>
                   <strong>Directors:</strong>{" "}
                   {Array.isArray(movieData.directors)
@@ -72,18 +81,18 @@ const MovieDetail = () => {
                 </p>
               </div>
 
-              <div className="flex space-x-4">
+              <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4">
                 <a
                   href="#"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  className="bg-blue-500 text-white px-4 py-2 flex rounded-lg hover:bg-blue-600"
                 >
-                  Watch Trailer
+                  <BiSolidMoviePlay className="text-2xl mr-2" /> Watch Trailer
                 </a>
                 <a
                   href="#"
-                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                  className="bg-red-500 text-white flex px-4 py-2 rounded-lg hover:bg-red-600"
                 >
-                  Watch Movie
+                  <BiSolidCameraMovie className="text-2xl mr-2" /> Watch Movie
                 </a>
               </div>
             </div>
