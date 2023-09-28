@@ -22,7 +22,7 @@ const movie = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    // for multiple
+    // for multiple movies
       .addCase(fetchMovies.pending, (state) => {
         state.isLoading = true;
       })

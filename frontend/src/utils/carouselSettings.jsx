@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
     infinite: false,
     slidesToShow: 4,
     slidesToScroll: 4,
-    autoplay: false,
+    autoplay: true,
     speed: 2000,
     responsive: [
       {
