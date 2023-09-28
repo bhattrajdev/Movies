@@ -7,11 +7,9 @@ import { Loading } from "../components";
 
 const MovieDetail = () => {
   const id = useParams().id;
-  console.log(id)
   
     const dispatch = useDispatch();
-  const movieData = useSelector((state) => state.movie.data); // Access movie data from the Redux store
-  console.log(movieData)
+  const movieData = useSelector((state) => state.movie.data); 
 
   useEffect(() => {
     dispatch(fetchMovie(id));
