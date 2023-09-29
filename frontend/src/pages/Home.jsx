@@ -37,6 +37,22 @@ const Home = () => {
                   <Movies key={movie._id} movie={movie} />
                 ))  : ''}
               </Slider>
+
+
+                {/* for trending movies */}
+                <div className="flex justify-between mt-4 mb-4 ">
+                <div className="text-[17px] md:text-[19px] lg:text-[21px]">
+                  Latest
+                </div>
+                <button className="text-[14px] md:text-[16px] px-[40px] lg:text-[19px]  hover:text-indigo-500">
+                  View More
+                </button>
+              </div>
+              <Slider {...carouselSettings}>
+                {Array.isArray(movies) ?  movies.map((movie) => (
+                  <Movies key={movie._id} movie={movie} />
+                ))  : ''}
+              </Slider>
             </div>
           </div>
         )
