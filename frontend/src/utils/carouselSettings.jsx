@@ -1,5 +1,5 @@
-import React from 'react';
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
+import React from "react";
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 
 // function SampleNextArrow(props) {
 //   const { className, style, onClick } = props;
@@ -23,12 +23,12 @@ import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 //   );
 // }
 
-
 const carouselSettings = {
-  dots: true,
+  dots: false,
   infinite: false,
   slidesToShow: 4,
   slidesToScroll: 4,
+
   autoplay: true,
   speed: 2000,
   // nextArrow: <SampleNextArrow />,

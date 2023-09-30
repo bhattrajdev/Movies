@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { AiOutlinePlus, AiOutlineCheck } from "react-icons/ai";
 import { fetchMovie } from "../redux/slices/movie";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Loading } from "../components";
+import { Loading,Player } from "../components";
 import { BiSolidMoviePlay, BiSolidCameraMovie } from "react-icons/bi";
 
 const MovieDetail = () => {
@@ -82,12 +83,12 @@ const MovieDetail = () => {
               </div>
 
               <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4">
-                <a
-                  href="#"
+                <Link
+                  to={`/player/${movieData._id}`}
                   className="bg-blue-500 text-white px-4 py-2 flex rounded-lg hover:bg-blue-600"
                 >
                   <BiSolidMoviePlay className="text-2xl mr-2" /> Watch Trailer
-                </a>
+                </Link>
                 <a
                   href="#"
                   className="bg-red-500 text-white flex px-4 py-2 rounded-lg hover:bg-red-600"
