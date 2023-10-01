@@ -1,32 +1,32 @@
-import React from 'react'
-import "../App.css";
-import ReactPlayer from "react-player";
-import { Container } from "@mui/material";
-
-
+import React, { useRef, useState } from 'react';
+import ReactPlayer from 'react-player';
 
 const Player = () => {
+  const player = useRef(null);
+  
+  const config = {
+    file: {
+      attributes: {
+        controlsList: 'nodownload', // Disable download button
+      },
+    },
+  };
 
-    
   return (
-    <div className="video_container">
-    <div>
-      <h2>React player</h2>
-    </div>
-    <Container maxWidth="md" justify="center">
-      <div className="player__wrapper">
-      <ReactPlayer
-          className="player"
-          url="https://bucket-viewer.s3.amazonaws.com/viewer1664370329252.mp4"
-          width="100%"
-          height="100%"
+    <div className='flex items-center mt-[-64px] justify-center h-screen'>
+      <div className='player-wrapper'>
+        <ReactPlayer
+          ref={player}
+          width='100%'
+          height='500px'
+          url={`http://localhost:5173/public/trailers/trailer.mp4`}
+          controls={true}
           playing={true}
-          muted={true}
+          config={config}
         />
-      <Control />
+      </div>
     </div>
-  </Container>
-</div>  )
-}
+  );
+};
 
-export default Player
+export default Player;

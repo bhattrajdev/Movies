@@ -23,11 +23,6 @@ const userSchema = mongoose.Schema({
         type:String,
         required:false,
     },
-    subscription:{
-        type:String,
-        enum:['premium','standard'],
-        default: 'standard',
-    },
     payment:{
         id:{type:String},
         status:{type:String},

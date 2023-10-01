@@ -21,7 +21,6 @@ const fakeData = async () => {
         password: faker.internet.password(),
         isAdmin: faker.datatype.boolean(),
         profilePicture: faker.image.avatar(),
-        subscription: faker.helpers.arrayElement(["premium", "standard"]),
         payment: {
           id: faker.number.int(),
           status: faker.helpers.arrayElement(["success", "failed"]),
