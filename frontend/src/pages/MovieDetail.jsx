@@ -89,12 +89,12 @@ const MovieDetail = () => {
                 >
                   <BiSolidMoviePlay className="text-2xl mr-2" /> Watch Trailer
                 </Link>
-                <a
-                  href="#"
+                <Link
+                   to={`/player/${movieData._id}`}
                   className="bg-red-500 text-white flex px-4 py-2 rounded-lg hover:bg-red-600"
                 >
                   <BiSolidCameraMovie className="text-2xl mr-2" /> Watch Movie
-                </a>
+                </Link>
               </div>
             </div>
           </div>
