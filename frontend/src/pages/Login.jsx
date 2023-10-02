@@ -1,16 +1,51 @@
 import React from "react";
-import { Box,Stack } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  TextField,
+  Button,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 const Login = () => {
   return (
-<Stack
-  direction={{ xs: 'column', sm: 'row' }}
-  spacing={{ xs: 1, sm: 2, md: 4 }}
->
-  <Item>Item 1</Item>
-  <Item>Item 2</Item>
-  <Item>Item 3</Item>
-</Stack>
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {/* for Logo */}
+      <Typography variant="h4" mb={4}>Sign In</Typography>
+
+      {/* for login form */}
+      <Stack
+        sx={{
+          width: "400px",
+        }}
+        spacing={2}
+      >
+        {/* For username */}
+        <FormControl>
+          <TextField
+            fullWidth
+            label="Email Address*"
+            variant="outlined"
+          ></TextField>
+        </FormControl>
+
+        {/* For Password */}
+        <FormControl>
+          <TextField label="Password*" variant="outlined"></TextField>
+        </FormControl>
+
+        <Button variant="contained">Sign In</Button>
+      </Stack>
+    </Box>
   );
 };
 
