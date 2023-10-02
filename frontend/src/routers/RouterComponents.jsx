@@ -1,13 +1,14 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Navbar,Player } from "./components";
-import { Home, MovieDetail,Login } from "./pages";
+import { Navbar,Player } from "../components";
+import { Home, MovieDetail,Login } from "../pages";
 
-const Routes = () => {
+const RouterComponents = () => {
   return (
+    // for frontend
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navbar />}>
+        <Route element={<Navbar />}>
           <Route path="*" element="page not found"/>
           <Route index element={<Home />} />
           <Route path="MovieDetail/:id" element={<MovieDetail />} />
@@ -19,4 +20,4 @@ const Routes = () => {
   )
 }
 
-export default Routes
+export default RouterComponents

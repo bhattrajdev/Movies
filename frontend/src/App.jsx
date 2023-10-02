@@ -1,10 +1,10 @@
 import React from "react";
-import Routes from "./routes/Routes";
+import MasterComponents from "./master/MasterComponents";
 
 
 function App() {
   return (
-   <Routes/>
+   <MasterComponents/>
   );
 }
 
