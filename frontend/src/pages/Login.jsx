@@ -6,7 +6,11 @@ import {
   Button,
   Stack,
   Typography,
+  Avatar
 } from "@mui/material";
+
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 
 const Login = () => {
   return (
@@ -20,7 +24,9 @@ const Login = () => {
       }}
     >
       {/* for Logo */}
+      <Avatar sx={{fontSize:'20px', background:'blue'}} alt="Image not found"><LockOutlinedIcon/></Avatar>
       <Typography variant="h4" mb={4}>Sign In</Typography>
+
 
       {/* for login form */}
       <Stack
