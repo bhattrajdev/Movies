@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { Carousel, Loading, Movies } from "../components";
+import { Carousel, Loading, Movies } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies } from "../redux/slices/movie";
+import { fetchMovies } from "../../redux/slices/movie";
 import Slider from "react-slick";
-import carouselSettings from "../utils/carouselSettings";
+import carouselSettings from "../../utils/carouselSettings";
 
 const Home = () => {
   const dispatch = useDispatch();

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlinePlus, AiOutlineCheck } from "react-icons/ai";
-import { fetchMovie } from "../redux/slices/movie";
+import { fetchMovie } from "../../redux/slices/movie";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Loading,Player } from "../components";
+import { Loading,Player } from "../../components";
 import { BiSolidMoviePlay, BiSolidCameraMovie } from "react-icons/bi";
 
 const MovieDetail = () => {
