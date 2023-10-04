@@ -15,7 +15,7 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 const Login = () => {
   return (
     <Grid
-      spacing={2}
+      spacing={4}
       columns={16}
       sx={{
         height: "100vh",
@@ -24,11 +24,12 @@ const Login = () => {
         alignItems: "center",
       }}
     >
-      <Grid xs={8} sx={{ background: "#dfdfdf", padding: "50px" }}>
+      <Grid xs={8} >
         {/* for Logo */}
         <Avatar
           sx={{ background: "black", margin: "0 auto" }}
           alt="Image not found"
+          
         >
           <LockOutlinedIcon />
         </Avatar>
@@ -70,7 +71,11 @@ const Login = () => {
           </Button>
         </Stack>
       </Grid>
-      <Grid sx={8}>helloo</Grid>
+
+      {/* Code for image */}
+      {/* <Grid sx={8}>
+            <img src={'/images/Login.png'} className="w-[600px]" />
+      </Grid> */}
     </Grid>
   );
 };
