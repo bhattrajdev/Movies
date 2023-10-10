@@ -8,7 +8,7 @@
     "backend": "nodemon backend/server",
     "frontend": "npm run dev --prefix frontend",
     "application": "npm run backend & npm run frontend",
-"start": "concurrently \"npm run backend\" \"npm run frontend\""
+"dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "author": "Dev Raj Bhatt",
   "license": "ISC",
