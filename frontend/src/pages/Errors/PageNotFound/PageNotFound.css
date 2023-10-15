@@ -1,0 +1,15 @@
+#page_404 .svg {
+    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 70vh;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#page_404 .text {
+    text-align: center;
+    font-size: 20px;
+}
+
+#page_404 .btn-home {
+    text-align: center;
+}

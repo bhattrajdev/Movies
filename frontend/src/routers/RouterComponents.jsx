@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar, Player } from "../components";
-import { Home, MovieDetail, Login } from "../pages";
+import { Home, MovieDetail, Login, PageNotFound } from "../pages";
 
 const RouterComponents = () => {
   return (
@@ -10,7 +10,7 @@ const RouterComponents = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<Navbar />}>
-            <Route path="*" element="page not found" />
+            <Route path="*" element={<PageNotFound/>} />
             <Route index element={<Home />} />
             <Route path="MovieDetail/:id" element={<MovieDetail />} />
             <Route path="/player/:id" element={<Player />} />

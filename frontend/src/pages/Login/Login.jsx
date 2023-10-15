@@ -10,19 +10,15 @@ import {
   Button,
 } from "@mui/material";
 import HttpsIcon from "@mui/icons-material/Https";
+import Register from "../Register/Register";
+import { Link } from "react-router-dom";
+
+
 
 
 const Login = () => {
-  const [register, useRegister] = useState(false);
-// for handling register in form
-
-const registerHandler = () =>{
-
-}
-
-
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     console.log("handle submit");
   };
   return (
@@ -32,7 +28,7 @@ const registerHandler = () =>{
           elevation={10}
           sx={{
             padding: "20px",
-            height: "70vh",
+            height: "65vh",
             width: "350px",
             margin: "30px auto",
           }}
@@ -43,7 +39,7 @@ const registerHandler = () =>{
             <HttpsIcon />
           </Avatar>
           <Typography variant="h4" sx={{ textAlign: "center" }}>
-            SIGN IN
+            LOGIN
           </Typography>
           {/* form start */}
           <Box
@@ -56,11 +52,13 @@ const registerHandler = () =>{
               gap: 2,
             }}
           >
+            {/* for register full code  */}
+
             <TextField fullWidth label="Email" />
             <TextField fullWidth type="password" label="Password" />
 
             <Button type="submit" variant="contained" color="primary" fullWidth>
-              Submit
+              login
             </Button>
             <Typography sx={{ textAlign: "center" }}>
               Or Continue With
@@ -69,10 +67,14 @@ const registerHandler = () =>{
               <img src={"./images/google.png"} width={30} />
               <img src={"./images/facebook.png"} width={30} />
             </Box>
-            <Typography sx={{ textAlign: "center", }}>
-              New Here?
-              <Typography component="span" variant="inherit"  color="primary" sx={{marginLeft:1}} onClick={registerHandler}>
-                 REGISTER
+            <Typography sx={{ textAlign: "center" }}>
+              <Typography
+                component="span"
+                variant="inherit"
+                color="primary"
+                sx={{ marginLeft: "2px", cursor: "pointer" }}
+              >
+                New Here? <Link to='/register'>REGISTER</Link>
               </Typography>
             </Typography>
           </Box>
