@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar, Player } from "../components";
-import { Home, MovieDetail, Login, PageNotFound } from "../pages";
+import { Home, MovieDetail, Login, PageNotFound, Register } from "../pages";
 
 const RouterComponents = () => {
   return (
@@ -16,6 +16,7 @@ const RouterComponents = () => {
             <Route path="/player/:id" element={<Player />} />
           </Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
 

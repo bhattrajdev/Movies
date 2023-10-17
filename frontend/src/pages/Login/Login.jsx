@@ -10,17 +10,32 @@ import {
   Button,
 } from "@mui/material";
 import HttpsIcon from "@mui/icons-material/Https";
-import Register from "../Register/Register";
 import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
-
-
+const validationSchema = yup.object({
+  email: yup
+    .string("Enter your email")
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: yup
+    .string("Enter your password")
+    .min(8, "Password should be of minimum 8 characters length")
+    .required("Password is required"),
+});
 
 const Login = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("handle submit");
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert("Welcome");
+    },
+  });
   return (
     <>
       <Grid>
@@ -28,7 +43,7 @@ const Login = () => {
           elevation={10}
           sx={{
             padding: "20px",
-            height: "65vh",
+            height: "85vh",
             width: "350px",
             margin: "30px auto",
           }}
@@ -44,7 +59,7 @@ const Login = () => {
           {/* form start */}
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={formik.handleSubmit}
             sx={{
               mt: 5,
               display: "flex",
@@ -54,10 +69,36 @@ const Login = () => {
           >
             {/* for register full code  */}
 
-            <TextField fullWidth label="Email" />
-            <TextField fullWidth type="password" label="Password" />
+            <TextField
+              fullWidth
+              id="email"
+              name="email"
+              label="Email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+            <TextField
+              fullWidth
+              id="password"
+              name="password"
+              label="Password"
+              type="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+            />
 
-            <Button type="submit" variant="contained" color="primary" fullWidth>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+            >
               login
             </Button>
             <Typography sx={{ textAlign: "center" }}>
@@ -74,7 +115,7 @@ const Login = () => {
                 color="primary"
                 sx={{ marginLeft: "2px", cursor: "pointer" }}
               >
-                New Here? <Link to='/register'>REGISTER</Link>
+                New Here? <Link to="/register">REGISTER</Link>
               </Typography>
             </Typography>
           </Box>
