@@ -38,12 +38,12 @@ const Login = () => {
   });
   return (
     <>
-      <Grid>
+      <Grid sx={{}}>
         <Paper
           elevation={10}
           sx={{
             padding: "20px",
-            height: "85vh",
+            height: "23%",
             width: "350px",
             margin: "30px auto",
           }}
