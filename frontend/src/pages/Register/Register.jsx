@@ -14,10 +14,39 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 
 const Register = () => {
-  const [step1, setStep1] = useState(true);
+  const [step0, setStep0] = useState(true);
+  const [step1, setStep1] = useState(false);
   const [step2, setStep2] = useState(false);
   const [step3, setStep3] = useState(false);
 
+  // to haandle the steps of the code
+  const handleSteps = (type) => {
+    if (type === "next") {
+      console.log("next button is being pressed");
+      if (step1 === false && step2 === false && step3 === false) {
+        setStep1(true);
+        console.log(`step 1 false step 2 false step 3 false`);
+      } else if (step1 == true && step2 == false && step3 === false) {
+        console.log(`step 1 true step 2 false step 3 false`);
+        setStep2(true);
+      } else {
+        console.log(`step 1 true step 2 true step 3 true`);
+        setStep3(true);
+      }
+    } else if (type === "prev") {
+      console.log("prev button is being pressed");
+      if (step1 === true && step2 === true && step3 === true) {
+        setStep3(false);
+        console.log(`step 1 true step 2 true step 3 true`);
+      } else if (step1 == true && step2 == true && step3 === false) {
+        console.log(`step 1 true step 2 true step 3 false`);
+        setStep2(false);
+      } else {
+        console.log(`step 1 true step 2 false step 3 false`);
+        setStep1(false);
+      }
+    }
+  };
   return (
     <>
       <Grid sx={{}}>
@@ -98,14 +127,12 @@ const Register = () => {
                 position: "absolute",
                 top: "40%",
                 left: "calc(2*30px + 110px)",
-                width: "110px", // Length of the line
+                width: "110px",
                 height: "5px",
                 background: step2 === true ? "green" : "gray",
               }}
             ></Box>
-            {/* Line 2 */}
 
-            {/* Step 3 */}
             <Box
               component="span"
               sx={{
@@ -134,68 +161,95 @@ const Register = () => {
               gap: 2,
             }}
           >
-            {/* for register full code  */}
-            {/* for step 0 code  */}
-            {/* for email */}
-            <TextField
-              fullWidth
-              id="email"
-              type="email"
-              name="email"
-              label="Email"
-            />
-            {/* for phone number */}
-            <TextField
-              fullWidth
-              id="contact"
-              name="contact"
-              label="Phone Number"
-            />
-            {/* for date of birth */}
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker disableFuture label="Date Of Birth" />
-            </LocalizationProvider>
-            {/* for gender */}
-            <FormLabel id="demo-row-radio-buttons-group-label">
-              Gender
-            </FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-            >
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="Female"
-              />
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label="Other"
-              />
-            </RadioGroup>
+            {/* for step 0 code */}
+            {step0 && !step1 && !step2 && !step3 && (
+              <>
+                {/* for email */}
+                <TextField
+                  fullWidth
+                  id="email"
+                  type="email"
+                  name="email"
+                  label="Email"
+                />
+                {/* for phone number */}
+                <TextField
+                  fullWidth
+                  id="contact"
+                  name="contact"
+                  label="Phone Number"
+                />
+                {/* for date of birth */}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker disableFuture label="Date Of Birth" />
+                </LocalizationProvider>
+                {/* for gender */}
+                <FormLabel id="demo-row-radio-buttons-group-label">
+                  Gender
+                </FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                  <FormControlLabel
+                    value="other"
+                    control={<Radio />}
+                    label="Other"
+                  />
+                </RadioGroup>
+              </>
+            )}
+
+            {/* for step 1 code */}
+            {step0 && step1 && !step2 && !step3 && (
+              <Typography variant="h6">
+                Please enter the verification code that has been sent to your
+                contact number.
+              </Typography>
+            )}
+
             <Grid container spacing={2}>
               {/* First Button */}
               <Grid item xs={6}>
-                <Button fullWidth disabled variant="contained" color="primary">
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  disabled={!step1}
+                  onClick={() => {
+                    handleSteps("prev");
+                  }}
+                >
                   <NavigateBeforeIcon /> Prev
                 </Button>
               </Grid>
 
               {/* Second Button */}
               <Grid item xs={6}>
-                <Button fullWidth variant="contained" color="primary">
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={() => {
+                    handleSteps("next");
+                  }}
+                  disabled={step3}
+                  color="primary"
+                >
                   Next <NavigateNextIcon />
                 </Button>
               </Grid>
             </Grid>
-
-            {/* for step 1 */}
-            {/* <Button type="submit" variant="contained" color="primary" fullWidth>
-
-            </Button> */}
             {/* form end */}
             <Typography sx={{ textAlign: "center" }}>
               <Typography
