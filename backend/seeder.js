@@ -1,15 +1,13 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import User from "./models/userModel.js";
 import Movies from "./models/movieModel.js";
-import connectDB from "./config/db.js";
 import { faker } from "@faker-js/faker";
 
+import dotenv from "dotenv";
+import connectDB from "./config/db.js";
+
 dotenv.config();
-
 connectDB();
-
-
 
 const fakeData = async () => {
   try {

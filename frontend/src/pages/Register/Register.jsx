@@ -213,10 +213,12 @@ const Register = () => {
 
             {/* for step 1 code */}
             {step0 && step1 && !step2 && !step3 && (
-              <Typography variant="h6">
-                Please enter the verification code that has been sent to your
-                contact number.
-              </Typography>
+              <>
+                <Typography variant="h6">
+                  Please enter the verification code that has been sent to your
+                  contact number.
+                </Typography>
+              </>
             )}
 
             <Grid container spacing={2}>
