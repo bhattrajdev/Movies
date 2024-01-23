@@ -8,6 +8,11 @@ import {
 } from "../controllers/userController.js";
 // import { protect } from "../middleware/authMiddleware.js";
 
+/*
+
+PARENT ROUTE /USER
+
+*/
 const router = express.Router();
 
 // Routes realted to users

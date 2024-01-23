@@ -5,17 +5,23 @@ import generateToken from "../utils/generateToken.js";
 const authUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (user && (await user.password) === password) {
-    res.json({
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      token: generateToken(user._id),
-    });
-  } else {
-    res.status(401);
-    throw new Error("Invalid UserName Or Password");
+
+  try {
+    if (user && (await user.matchPassword(password))) {
+      const token = generateToken(user._id);
+      res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token: token,
+      });
+    } else {
+      res.status(401).json({ error: "Invalid email or password" });
+    }
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

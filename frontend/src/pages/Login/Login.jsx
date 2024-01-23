@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import {
   Grid,
   Paper,
@@ -11,33 +10,44 @@ import {
 } from "@mui/material";
 import HttpsIcon from "@mui/icons-material/Https";
 import { Link } from "react-router-dom";
-import { useFormik } from "formik";
-import * as yup from "yup";
-
-const validationSchema = yup.object({
-  email: yup
-    .string("Enter your email")
-    .email("Enter a valid email")
-    .required("Email is required"),
-  password: yup
-    .string("Enter your password")
-    .min(8, "Password should be of minimum 8 characters length")
-    .required("Password is required"),
-});
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../../redux/slices/user";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert("Welcome");
-    },
-  });
+ const token =  localStorage.getItem('token')
+
+
+const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data, e) => {
+    dispatch(userLogin({ email: data.email, password: data.password }));
+  };
+
+  const shouldRedirect = useSelector((state) => state.user.shouldRedirect);
+  useEffect(()=>{
+    if(shouldRedirect){
+      navigate('/')
+    }
+    if(token){
+      navigate('/')
+    }
+  },[token])
+
   return (
     <>
+      <ToastContainer />
       <Grid sx={{}}>
         <Paper
           elevation={10}
@@ -59,7 +69,7 @@ const Login = () => {
           {/* form start */}
           <Box
             component="form"
-            onSubmit={formik.handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             sx={{
               mt: 5,
               display: "flex",
@@ -68,16 +78,33 @@ const Login = () => {
             }}
           >
             {/* for register full code  */}
-
+            <ErrorMessage
+              errors={errors}
+              name="email"
+              render={({ message }) => (
+                <span className="text-red-500 pl-2">{message}</span>
+              )}
+            />
             <TextField
               fullWidth
               id="email"
               name="email"
               label="Email"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
+              {...register("email", {
+                required: "Email is Required !!!",
+                pattern: {
+                  value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                  message: "Invalid Email !!!",
+                },
+              })}
+            />
+
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              render={({ message }) => (
+                <span className="text-red-500 pl-2">{message}</span>
+              )}
             />
             <TextField
               fullWidth
@@ -85,20 +112,12 @@ const Login = () => {
               name="password"
               label="Password"
               type="password"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
+              {...register("password", {
+                required: "Password is Required !!!",
+              })}
             />
 
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              fullWidth
-              onChange={formik.handleChange}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-            >
+            <Button type="submit" variant="contained" color="primary" fullWidth>
               login
             </Button>
             <Typography sx={{ textAlign: "center" }}>

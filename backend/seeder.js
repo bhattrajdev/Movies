@@ -12,7 +12,7 @@ connectDB();
 const fakeData = async () => {
   try {
     // Generate fake user data
-    const fakeUsers = Array.from({ length: 10 }, () => {
+    const fakeUsers = Array.from({ length: 1 }, () => {
       const user = {
         username: faker.internet.userName(),
         email: faker.internet.email(),
@@ -29,7 +29,7 @@ const fakeData = async () => {
     });
 
     // Generate fake data for movies
-    const fakeMovies = Array.from({ length: 40 }, () => {
+    const fakeMovies = Array.from({ length: 4 }, () => {
       const movie = {
         title: faker.lorem.words(5),
         description: faker.lorem.paragraph(),

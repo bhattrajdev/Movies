@@ -1,17 +1,27 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios'
+import api from "../../config/Api";
+import { showErrorToast,showSuccessToast } from "../../pages/Errors/ToastError/ToastError";
 
 // to fetch all the movies
 export const fetchMovies = createAsyncThunk("fetchMovies", async () => {
-  const response = await axios.get(`http://localhost:5000/movies`)
-  return response.data;
+  try {
+    const response = await api.get(`/movies`);
+    return response.data;
+  } catch (error) {
+    showErrorToast("Error fetching movies");
+    throw error;
+  }
 });
 
-
 // to fetch a single movie
-export const fetchMovie = createAsyncThunk("fetchMovie",async(id)=>{
-  const response = await axios.get(`http://localhost:5000/movies/${id}`)
-  return response.data;
+export const fetchMovie = createAsyncThunk("fetchMovie", async (id) => {
+  try {
+    const response = await api.get(`movies/${id}`);
+    return response.data;
+  } catch (error) {
+    showErrorToast("Error !! Please try again");
+    throw error;
+  }
 });
 
 const movie = createSlice({
@@ -22,7 +32,7 @@ const movie = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    // for multiple movies
+      // for multiple movies
       .addCase(fetchMovies.pending, (state) => {
         state.isLoading = true;
       })
@@ -31,8 +41,8 @@ const movie = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
-        console.log("Error fetching movies", action.error);
-       const error =  state.isError = true;
+        state.isLoading = false;
+        state.isError = true;
       })
 
       // for a single movie
@@ -44,14 +54,10 @@ const movie = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchMovie.rejected, (state, action) => {
-        console.log("Error fetching a single movie", action.error);
+        state.isLoading = false;
         state.isError = true;
       });
   },
 });
-
-
-
-
 
 export default movie.reducer;

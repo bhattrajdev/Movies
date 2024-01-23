@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link, Outlet } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -13,16 +14,18 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { Grid, Button } from "@mui/material";
 import { AiFillHome } from "react-icons/ai";
 import { BiTrendingUp, BiSolidVideos } from "react-icons/bi";
 import { FaFireAlt } from "react-icons/fa";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import PersonIcon from "@mui/icons-material/Person";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { Link } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 
 const icons = [
   <AiFillHome />,
@@ -31,11 +34,7 @@ const icons = [
   <FaFireAlt />,
 ];
 
-const asideLinks = [
-  '/',
-
-  
-]
+const asideLinks = ["/"];
 
 const drawerWidth = 240;
 
@@ -119,6 +118,14 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const token = localStorage.getItem("token");
+
+  useEffect(()=>{
+
+  },[token])
+  
+
+  const navigate = useNavigate();
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -168,23 +175,65 @@ const Navbar = () => {
           </div>
           {/* End of Search bar */}
 
-          {/* User Icon and Menu */}
-          <IconButton
-            color="inherit"
-            aria-label="user menu"
-            onClick={handleUserMenuOpen}
-          >
-            <PersonIcon />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleUserMenuClose}
-          >
-            <MenuItem onClick={handleUserMenuClose}>My Account</MenuItem>
-            <MenuItem onClick={handleUserMenuClose}>Logout</MenuItem>
-          </Menu>
-          {/* End of User Icon and Menu */}
+          {token ? (
+            <>
+              {" "}
+              {/* User Icon and Menu */}
+              <IconButton
+                color="inherit"
+                aria-label="user menu"
+                onClick={handleUserMenuOpen}
+              >
+                <PersonIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleUserMenuClose}
+              >
+                <MenuItem onClick={handleUserMenuClose}>My Account</MenuItem>
+                <MenuItem onClick={handleUserMenuClose}>Logout</MenuItem>
+              </Menu>
+              {/* End of User Icon and Menu */}
+            </>
+          ) : (
+            <>
+              <Grid sx={{ paddingRight: 2, display: "flex", gap: "10px" }}>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      border: "1px solid white",
+                      backgroundColor: "black",
+                      "&:hover": {
+                        backgroundColor: "white",
+                        color: "black",
+                      },
+                    }}
+                    onClick={() => navigate("/login")}
+                  >
+                    Login
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    sx={{
+                      backgroundColor: "white",
+                      color: "black",
+                      "&:hover":{
+                        backgroundColor:'white'
+                      }
+                    }}
+                    onClick={() => navigate("/register")}
+                  >
+                    Register
+                  </Button>
+                </Grid>
+              </Grid>
+            </>
+          )}
         </Toolbar>
       </AppBar>
 
@@ -201,33 +250,33 @@ const Navbar = () => {
       >
         <List sx={{ marginTop: "70px", fontWeight: "500" }}>
           {["HOME", "FOR YOU", "TRENDING", "LATEST"].map((text, index) => (
-            
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <Link to={asideLinks[index]}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                  "&:hover": {
-                    borderRadius: 4,
-                    backgroundColor: "gray",
-                  },
-                }}
-              >
-                <ListItemIcon
+                <ListItemButton
                   sx={{
-                    fontSize: "20px",
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                    color: "white",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                    "&:hover": {
+                      borderRadius: 4,
+                      backgroundColor: "gray",
+                    },
                   }}
                 >
-                  {icons[index]}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton></Link>
+                  <ListItemIcon
+                    sx={{
+                      fontSize: "20px",
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                      color: "white",
+                    }}
+                  >
+                    {icons[index]}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </Link>
             </ListItem>
           ))}
         </List>
@@ -242,8 +291,10 @@ const Navbar = () => {
       >
         <DrawerHeader />
         {/* the code should load here */}
-        <div>   <Outlet /></div>
-     
+        <div>
+          {" "}
+          <Outlet />
+        </div>
       </Box>
     </Box>
   );
