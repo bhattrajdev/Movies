@@ -1,11 +1,10 @@
-import React from 'react'
+import Layout from "./components/Layout";
+import './index.css'
 
-const AdminLayout = () => {
+function AdminLayout() {
   return (
-    <div>
-    AdminLayout
-    </div>
-  )
+    <Layout/>
+  );
 }
 
-export default AdminLayout
+export default AdminLayout;

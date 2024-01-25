@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@headlessui/react": "^1.7.18",
     "@hookform/error-message": "^2.0.1",
     "@mui/icons-material": "^5.14.8",
     "@mui/material": "^5.14.8",
@@ -27,6 +28,7 @@
     "react-redux": "^8.1.2",
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
+    "react-select": "^5.8.0",
     "react-slick": "^0.29.0",
     "react-toastify": "^10.0.4",
     "slick-carousel": "^1.8.1",

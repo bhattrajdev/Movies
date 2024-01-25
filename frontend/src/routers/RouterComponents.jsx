@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar, Player } from "../components";
 import { Home, MovieDetail, Login, PageNotFound, Register } from "../pages";
 import AdminLayout from "../admin/AdminLayout";
+import { Dashboard, ViewMovies, AddMovies, Users } from "../admin/pages";
 
 
 const RouterComponents = () => {
@@ -25,7 +26,10 @@ const RouterComponents = () => {
 
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminLayout />}>
-            {/* Add admin panel routes here */}
+            <Route index element={<Dashboard />} />
+            <Route path="user" element={<Users />} />
+            <Route path="movies" element={<ViewMovies />} />
+            <Route path="add_movies" element={<AddMovies />} />
           </Route>
         </Routes>
       </BrowserRouter>
