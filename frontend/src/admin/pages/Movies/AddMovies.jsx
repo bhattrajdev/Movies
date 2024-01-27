@@ -16,22 +16,39 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-
+import { useDispatch,useSelector } from "react-redux";
+import { createMovie } from "../../../redux/slices/movie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router";
 const AddMovies = () => {
   const [validationError, setValidationError] = useState(null);
-
- const [selectedGenres, setSelectedGenres] = useState([]);
- const [selectedDirectors, setSelectedDirectors] = useState([]);
- const [selectedCast, setSelectedCast] = useState([]);
- const [selectedPosters, setSelectedPosters] = useState([]);
- const [selectedTrailers, setSelectedTrailers] = useState([]);
- const [selectedMovies, setSelectedMovies] = useState([]);
- const [releaseDate, setReleaseDate] = useState(null);
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedDirectors, setSelectedDirectors] = useState([]);
+  const [selectedCast, setSelectedCast] = useState([]);
+  const [selectedPosters, setSelectedPosters] = useState([]);
+  const [selectedTrailers, setSelectedTrailers] = useState([]);
+  const [selectedMovies, setSelectedMovies] = useState([]);
+  const [releaseDate, setReleaseDate] = useState(null);
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
+
+    const shouldRedirect = useSelector((state) => state.movie.shouldRedirect);
+
+    useEffect(() => {
+      if (shouldRedirect) {
+        // Redirect logic here
+        navigate("/admin/movies");
+      }
+    }, [shouldRedirect, navigate]);
+
+
+  const dispatch = useDispatch();
 
   const genres = [
     { value: "action", label: "Action" },
@@ -155,84 +172,72 @@ const AddMovies = () => {
   const customStyles = {
     control: (provided) => ({
       ...provided,
-      minHeight: "60px", 
+      minHeight: "60px",
     }),
   };
 
-const handleFileChange = (e, type) => {
-  const file = e.target.files[0];
+  const handleFileChange = (e, type) => {
+    const file = e.target.files[0];
 
-  if (file) {
-    const allowedFileTypes = {
-      poster: ["image/jpeg", "image/png"],
-      trailer: ["video/mp4", "video/webm"],
-      movie: ["video/mp4", "video/webm"],
-    };
-
-    if (
-      !allowedFileTypes[type] ||
-      !allowedFileTypes[type].includes(file.type)
-    ) {
-      setValidationError(type);
-      return;
-    }
-
-    setValidationError(null);
-
-    try {
-      const imageUrl = URL.createObjectURL(file);
-
-      // Keep the basic file information along with the raw file data
-      const fileData = {
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        lastModified: file.lastModified,
+    if (file) {
+      const allowedFileTypes = {
+        poster: ["image/jpeg", "image/png"],
+        trailer: ["video/mp4", "video/webm"],
+        movie: ["video/mp4", "video/webm"],
       };
 
+      if (
+        !allowedFileTypes[type] ||
+        !allowedFileTypes[type].includes(file.type)
+      ) {
+        setValidationError(type);
+        return;
+      }
 
+      setValidationError(null);
 
+      try {
+        const imageUrl = URL.createObjectURL(file);
+        const fileData = {
+         file
+        };
+        switch (type) {
+          case "poster":
+            if (file.type.startsWith("image/")) {
+              setSelectedPosters([{ imageUrl, fileData }]);
+            } else {
+              console.error("Invalid file type for poster");
+            }
+            break;
+          case "trailer":
+            setSelectedTrailers([{ imageUrl, fileData }]);
+            break;
+          case "movie":
+            setSelectedMovies([{ imageUrl, fileData }]);
+            break;
+          default:
+            console.error("Invalid file type");
+        }
+      } catch (error) {
+        console.error("Error creating object URL:", error);
+      }
+    } else {
+      // Handle the case when no file is selected
       switch (type) {
         case "poster":
-          if (file.type.startsWith("image/")) {
-            setSelectedPosters([{ imageUrl, fileData }]);
-          
-          } else {
-            console.error("Invalid file type for poster");
-          }
+          setSelectedPosters([]);
           break;
         case "trailer":
-          setSelectedTrailers([{ imageUrl, fileData }]);
+          setSelectedTrailers([]);
           break;
         case "movie":
-          setSelectedMovies([{ imageUrl, fileData }]);
+          setSelectedMovies([]);
           break;
         default:
           console.error("Invalid file type");
       }
-    } catch (error) {
-      console.error("Error creating object URL:", error);
     }
-  } else {
-    // Handle the case when no file is selected
-    switch (type) {
-      case "poster":
-        setSelectedPosters([]);
-        break;
-      case "trailer":
-        setSelectedTrailers([]);
-        break;
-      case "movie":
-        setSelectedMovies([]);
-        break;
-      default:
-        console.error("Invalid file type");
-    }
-  }
-};
-
-
-
+  };
 
   const handleChange = (fieldName) => (newValue, actionMeta) => {
     switch (fieldName) {
@@ -254,16 +259,24 @@ const handleFileChange = (e, type) => {
     }
   };
 
-  const onSubmit = async (data, e) => {
-    console.log(selectedGenres);
-
+const handleInitialState = () => {
+  setValidationError(null);
+  setSelectedGenres([]);
+  setSelectedDirectors([]);
+  setSelectedCast([]);
+  setSelectedPosters([]);
+  setSelectedTrailers([]);
+  setSelectedMovies([]);
+  setReleaseDate(null);
+};
+  const onSubmit = (data, e) => {
     if (selectedGenres.length === 0) {
       setValidationError("noGenres");
     } else if (selectedDirectors.length === 0) {
       setValidationError("noDirectors");
     } else if (selectedCast.length === 0) {
       setValidationError("noCast");
-    } else if (selectedPosters.length ===0 ) {
+    } else if (selectedPosters.length === 0) {
       setValidationError("noPoster");
     } else if (selectedTrailers.length === 0) {
       setValidationError("noTrailer");
@@ -272,25 +285,65 @@ const handleFileChange = (e, type) => {
     } else if (releaseDate === null) {
       setValidationError("releaseDate");
     } else {
-        const details = {
-          title: data.title,
-          productionStudio: data.productionStudio,
-          genres: selectedGenres,
-          directors: selectedDirectors,
-          cast: selectedCast,
-          poster: selectedPosters[0].fileData,
-          trailer: selectedTrailers[0].fileData,
-          movie: selectedMovies[0].fileData,
-          releaseDate: releaseDate,
-          status: data.status,
-        };
-     console.log(details)
-    }
-  };
+      const details = {
+        title: data.title,
+        productionStudio: data.productionStudio,
+        genres: selectedGenres,
+        directors: selectedDirectors,
+        cast: selectedCast,
+        poster: selectedPosters[0].fileData,
+        trailer: selectedTrailers[0].fileData,
+        movie: selectedMovies[0].fileData,
+        releaseDate: releaseDate,
+        status: data.status,
+        description: data.description,
+      };
 
-   
+      const directorValues = details.directors
+        .map((director) => director.value)
+        .join(", ");
+      const castValues = details.cast.map((cast) => cast.value).join(", ");
+      const genresValue = details.genres.map((cast) => cast.value).join(", ");
+
+      const formData = new FormData();
+      formData.append("title", details.title);
+      formData.append("productionStudio", details.productionStudio);
+      formData.append("genres", genresValue);
+      formData.append("directors", directorValues);
+      formData.append("cast", castValues);
+      formData.append("description", details.description);
+      formData.append("poster", details.poster.file);
+      formData.append("trailer", details.trailer.file);
+      formData.append("movie", details.movie.file);
+      formData.append("releaseDate", details.releaseDate);
+      formData.append("status", details.status);
+
+//     try {
+//   dispatch(createMovie(formData));
+
+//   const shouldRedirect = useSelector(
+//     (state) => state.createMovie.shouldRedirect
+//   );
+
+//   console.log("shouldRedirect:", shouldRedirect); // Check the value
+
+//   if (shouldRedirect) {
+//     console.log("Navigating to /movies");
+//     navigate("/movies");
+//   }
+// } catch (error) {
+//   console.error("Error dispatching createMovie:", error);
+// }
+try {
+  dispatch(createMovie(formData));
+} catch (error) {
+  console.error("Error dispatching createMovie:", error);
+}
+    }}
+ 
   return (
     <>
+      <ToastContainer />
       <Paper
         elevation={3}
         sx={{
@@ -423,9 +476,33 @@ const handleFileChange = (e, type) => {
             <CreatableSelect
               label="cast"
               isMulti
+              defaultValue={selectedCast}
               onChange={handleChange("cast")}
-              options={directors}
+              options={movieCast}
               styles={customStyles}
+            />
+          </Box>
+
+          <Box sx={{ width: "100%" }}>
+            <label>
+              Description:{" "}
+              <ErrorMessage
+                errors={errors}
+                name="description"
+                render={({ message }) => (
+                  <span className="text-red-500 ">{message}</span>
+                )}
+              />
+            </label>
+            <TextField
+              fullWidth
+              id="description"
+              name="description"
+              multiline
+              rows={5}
+              {...register("description", {
+                required: "Description is Required !!!",
+              })}
             />
           </Box>
 
@@ -625,7 +702,6 @@ const handleFileChange = (e, type) => {
                             borderRadius: "8px",
                           }}
                         />
-                      
                       </div>
                     ))}
                   </div>

@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../config/Api";
-import { showErrorToast,showSuccessToast } from "../../pages/Errors/ToastError/ToastError";
+import { showErrorToast,showSuccessToast} from "../../pages/Errors/ToastError/ToastError";
 
 // to fetch all the movies
 export const fetchMovies = createAsyncThunk("fetchMovies", async () => {
   try {
     const response = await api.get(`/movies`);
-    return response.data;
+      return response.data;
   } catch (error) {
     showErrorToast("Error fetching movies");
     throw error;
@@ -24,11 +24,30 @@ export const fetchMovie = createAsyncThunk("fetchMovie", async (id) => {
   }
 });
 
+// to create a new movie
+export const createMovie = createAsyncThunk("createMovie", async (data) => {
+  try {
+    const response = await api.post(`/movies`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    if(response.status == 201){
+      showSuccessToast('Movie upload successfully')
+    }
+    return response.data;
+  } catch (error) {
+    console.log(error)
+   showSuccessToast("Failed to upload movie");
+  }
+});
+
 const movie = createSlice({
   name: "movie",
   initialState: {
     isLoading: false,
     data: null,
+    shouldRedirect: false,
   },
   extraReducers: (builder) => {
     builder
@@ -54,6 +73,20 @@ const movie = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchMovie.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+
+      // for a creating a movie
+      .addCase(createMovie.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createMovie.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+        state.shouldRedirect = true;
+      })
+      .addCase(createMovie.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
       });

@@ -12,6 +12,9 @@ app.use(cors());
 dotenv.config();
 connectDB();
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+
 // for all the routes related to users
 app.use("/user", userRoute);
 

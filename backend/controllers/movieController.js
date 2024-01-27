@@ -1,3 +1,4 @@
+
 import Movies from "../models/movieModel.js";
 
 // to get all the movies
@@ -33,39 +34,37 @@ const deleteMovie = async (req, res) => {
   }
 };
 
+// to create a movie
+const createMovie = async (req, res) => {
+  try {
+console.log(req.body)
+      let poster = "";
+      let movies = "";
+      let trailer = "";
+      if (req.file) {
+       poster  = req.file.poster;
+       movies = req.file.movie;
+       trailer = req.file.trailer;
+      }
 
-// Creating a new Movie
-// const newMovie = async (req, res) => {
-//   const { title} = req.body;
- 
+      const newMovie = await Movies.create({
+        ...req.body,
+        poster,
+        movies,
+        trailer
+      });
 
-//   if (title) {
-//     res.json({
-//       message: "Movie already exists !!",
-//     });
-//   } else{
-//     const user = await User.create({
-//       username,
-//       email,
-//       password,
-//     });
-
-//     if (user) {
-//       res.status(201).json({
-//         _id: user._id,
-//         username: user.username,
-//         email: user.email,
-//         password: user.password,
-//         profilePicture: user.profilePicture,
-//         isAdmin: user.isAdmin,
-//       });
-//     } else {
-//       res.status(400);
-//       throw new Error("Invalid User Data");
-//     }
-//   }
-// };
+      res.status(201).json(newMovie);
+    }
+   catch (error) {
+    console.error("Error creating job application:", error);
+    res.status(500).json({
+      error:
+        error,
+    });
+   }
+};
 
 
 
-export {getMovies,getMovie}
+export {getMovies,getMovie,createMovie}
