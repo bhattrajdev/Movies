@@ -1,9 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
-import userRoute from "./routes/userRoutes.js";
-import movieRoute from "./routes/movieRoutes.js";
 import cors from "cors";
+import userRoute from "./routes/movieRoutes.js";
+import movieRoute from "./routes/movieRoutes.js";
+import bannerRoute from "./routes/bannerRoutes.js";
 
 
 const app = express();
@@ -20,6 +21,9 @@ app.use("/user", userRoute);
 
 // for all the routes related to movies
 app.use("/movies", movieRoute);
+
+// for all routes related to banner
+app.use("/banner",bannerRoute)
 
 const PORT = process.env.PORT || 5000;
 

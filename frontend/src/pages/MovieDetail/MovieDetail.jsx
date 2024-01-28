@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Loading,Player } from "../../components";
 import { BiSolidMoviePlay, BiSolidCameraMovie } from "react-icons/bi";
+import api from "../../config/Api";
 
 const MovieDetail = () => {
   const id = useParams().id;
@@ -22,17 +23,17 @@ const MovieDetail = () => {
       {movieData ? (
         <div className="bg-cover bg-no-repeat bg-center relative mt-[-64px]">
           <img
-            src={movieData.poster}
+            src={`${api.defaults.baseURL}/${movieData.poster}`}
             alt={movieData.title}
-            className="w-full h-screen blur-sm"
+            className="w-full h-screen object-cover blur-sm"
           />
 
           <div className="w-full h-full absolute inset-0 bg-gradient-to-b from-transparent via-black to-black opacity-80" />
 
           <div className="absolute inset-0 flex flex-col lg:flex-row lg:justify-center lg:items-center text-white">
             <img
-              src={movieData.poster}
-              className="w-[300px] lg:w-[400px] xl:w-[500px] 2xl:w-[600px]"
+              src={`${api.defaults.baseURL}/${movieData.poster}`}
+              className="w-[300px] h-[600px] lg:w-[400px] xl:w-[500px] 2xl:w-[600px]"
               alt={movieData.title}
             />
             <div className="max-w-screen-md p-4 lg:p-8 xl:p-12 2xl:p-16">
@@ -90,7 +91,7 @@ const MovieDetail = () => {
                   <BiSolidMoviePlay className="text-2xl mr-2" /> Watch Trailer
                 </Link>
                 <Link
-                   to={`/player/${movieData._id}`}
+                  to={`/player/${movieData._id}`}
                   className="bg-red-500 text-white flex px-4 py-2 rounded-lg hover:bg-red-600"
                 >
                   <BiSolidCameraMovie className="text-2xl mr-2" /> Watch Movie

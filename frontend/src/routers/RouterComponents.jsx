@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar, Player } from "../components";
 import { Home, MovieDetail, Login, PageNotFound, Register } from "../pages";
 import AdminLayout from "../admin/AdminLayout";
-import { Dashboard, ViewMovies, AddMovies, Users } from "../admin/pages";
+import { Dashboard, ViewMovies, AddMovies, Users,Banner } from "../admin/pages";
 
 const RouterComponents = () => {
   return (
@@ -25,9 +25,13 @@ const RouterComponents = () => {
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="user" element={<Users />} />
+            {/* routes related to movies */}
             <Route path="movies" element={<ViewMovies />} />
             <Route path="add_movies" element={<AddMovies />} />
+            {/* routes related to banner */}
+            <Route path="banner" element={<Banner />} />
+
+            <Route path="user" element={<Users />} />
           </Route>
         </Routes>
       </BrowserRouter>

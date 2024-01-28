@@ -1,14 +1,9 @@
-
 import Movies from "../models/movieModel.js";
-
-// to get all the movies
-const getMovies = async (req,res) =>{
-const movies = await Movies.find({})
-res.json(movies)
-}
-
-
-
+import { deleteFile } from "../config/fileUpload.js";// to get all the movies
+const getMovies = async (req, res) => {
+  const movies = await Movies.find({});
+  res.json(movies);
+};
 
 // to get a movie
 const getMovie = async (req, res) => {
@@ -25,11 +20,20 @@ const getMovie = async (req, res) => {
 //to delete a movie
 const deleteMovie = async (req, res) => {
   try {
-    console.log(req.params.id)
+    console.log(req.params.id);
     const movie = await Movies.findById(req.params.id);
 
-    console.log(movie)
+    console.log(movie);
     if (movie) {
+      const trailerPath = `public/${movie.trailer}`;
+      deleteFile(trailerPath);
+
+      const moviePath =  `public/${movie.movie}`;
+      deleteFile(moviePath);
+
+      const posterPath = `public/${movie.poster}`;
+      deleteFile(posterPath);
+
       await movie.deleteOne();
       res.status(200).json({ message: "Movie Removed" });
     } else {
@@ -41,38 +45,39 @@ const deleteMovie = async (req, res) => {
   }
 };
 
-
 // to create a movie
 const createMovie = async (req, res) => {
   try {
-console.log(req.body)
-      let poster = "";
-      let movies = "";
-      let trailer = "";
-      if (req.file) {
-       poster  = req.file.poster;
-       movies = req.file.movie;
-       trailer = req.file.trailer;
-      }
+    console.log("req.body:", req.body);
+    console.log("req.files:", req.files); // Use req.files instead of req.file
 
-      const newMovie = await Movies.create({
-        ...req.body,
-        poster,
-        movies,
-        trailer
-      });
+    let poster = "";
+    let movie = "";
+    let trailer = "";
 
-      res.status(201).json(newMovie);
+    if (req.files) {
+      // Assuming you have specific fields in req.files like "poster", "movie", and "trailer"
+      poster = req.files.poster[0].filename || "";
+      movie = req.files.movie[0].filename || "";
+      trailer = req.files.trailer[0].filename || "";
     }
-   catch (error) {
-    console.error("Error creating job application:", error);
-    res.status(500).json({
-      error:
-        error,
+
+    const newMovie = await Movies.create({
+      ...req.body,
+      poster,
+      movie,
+      trailer,
     });
-   }
+
+    console.log("newMovie:", newMovie);
+
+    res.status(201).json(newMovie);
+  } catch (error) {
+    console.error("Error creating movie:", error);
+    res.status(500).json({
+      error: error.message,
+    });
+  }
 };
-
-
 
 export { getMovies, getMovie, createMovie, deleteMovie };

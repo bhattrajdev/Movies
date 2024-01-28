@@ -8,6 +8,7 @@ import {
 	HiOutlineQuestionMarkCircle,
 	HiOutlineCog
 } from 'react-icons/hi'
+import { PiFlagBannerFill } from "react-icons/pi";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
   {
@@ -21,6 +22,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     label: "Movies",
     path: "/movies",
     icon: <HiOutlineCube />,
+  },
+  {
+    key: "banner",
+    label: "Banner",
+    path: "/banner",
+    icon: <PiFlagBannerFill />,
   },
   {
     key: "users",

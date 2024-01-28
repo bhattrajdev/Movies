@@ -49,43 +49,43 @@ const AddMovies = () => {
   const dispatch = useDispatch();
 
   const genres = [
-    { value: "action", label: "Action" },
-    { value: "adventure", label: "Adventure" },
-    { value: "animation", label: "Animation" },
-    { value: "biography", label: "Biography" },
-    { value: "comedy", label: "Comedy" },
-    { value: "crime", label: "Crime" },
-    { value: "documentary", label: "Documentary" },
-    { value: "drama", label: "Drama" },
-    { value: "family", label: "Family" },
-    { value: "fantasy", label: "Fantasy" },
-    { value: "history", label: "History" },
-    { value: "horror", label: "Horror" },
-    { value: "music", label: "Music" },
-    { value: "musical", label: "Musical" },
-    { value: "mystery", label: "Mystery" },
-    { value: "romance", label: "Romance" },
-    { value: "sci_fi", label: "Science Fiction" },
-    { value: "sport", label: "Sport" },
-    { value: "thriller", label: "Thriller" },
-    { value: "war", label: "War" },
-    { value: "western", label: "Western" },
-    { value: "crime_drama", label: "Crime Drama" },
-    { value: "historical_fiction", label: "Historical Fiction" },
-    { value: "superhero", label: "Superhero" },
-    { value: "spy", label: "Spy" },
-    { value: "dark_comedy", label: "Dark Comedy" },
-    { value: "courtroom_drama", label: "Courtroom Drama" },
-    { value: "political_thriller", label: "Political Thriller" },
-    { value: "suspense", label: "Suspense" },
-    { value: "apocalyptic", label: "Apocalyptic" },
-    { value: "urban_fantasy", label: "Urban Fantasy" },
-    { value: "time_travel", label: "Time Travel" },
-    { value: "coming_of_age", label: "Coming of Age" },
-    { value: "biographical_drama", label: "Biographical Drama" },
-    { value: "psychological_thriller", label: "Psychological Thriller" },
-    { value: "sci_fi_horror", label: "Sci-Fi Horror" },
-    { value: "heist", label: "Heist" },
+    { value: "ACTION", label: "Action" },
+    { value: "ADVENTURE", label: "Adventure" },
+    { value: "ANIMATION", label: "Animation" },
+    { value: "BIOGRAPHY", label: "Biography" },
+    { value: "COMEDY", label: "Comedy" },
+    { value: "CRIME", label: "Crime" },
+    { value: "DOCUMENTARY", label: "Documentary" },
+    { value: "DRAMA", label: "Drama" },
+    { value: "FAMILY", label: "Family" },
+    { value: "FANTASY", label: "Fantasy" },
+    { value: "HISTORY", label: "History" },
+    { value: "HORROR", label: "Horror" },
+    { value: "MUSIC", label: "Music" },
+    { value: "MUSICAL", label: "Musical" },
+    { value: "MYSTERY", label: "Mystery" },
+    { value: "ROMANCE", label: "Romance" },
+    { value: "SCI_FI", label: "Science Fiction" },
+    { value: "SPORT", label: "Sport" },
+    { value: "THRILLER", label: "Thriller" },
+    { value: "WAR", label: "War" },
+    { value: "WESTERN", label: "Western" },
+    { value: "CRIME_DRAMA", label: "Crime Drama" },
+    { value: "HISTORICAL_FICTION", label: "Historical Fiction" },
+    { value: "SUPERHERO", label: "Superhero" },
+    { value: "SPY", label: "Spy" },
+    { value: "DARK_COMEDY", label: "Dark Comedy" },
+    { value: "COURTROOM_DRAMA", label: "Courtroom Drama" },
+    { value: "POLITICAL_THRILLER", label: "Political Thriller" },
+    { value: "SUSPENSE", label: "Suspense" },
+    { value: "APOCALYPTIC", label: "Apocalyptic" },
+    { value: "URBAN_FANTASY", label: "Urban Fantasy" },
+    { value: "TIME_TRAVEL", label: "Time Travel" },
+    { value: "COMING_OF_AGE", label: "Coming of Age" },
+    { value: "BIOGRAPHICAL_DRAMA", label: "Biographical Drama" },
+    { value: "PSYCHOLOGICAL_THRILLER", label: "Psychological Thriller" },
+    { value: "SCI_FI_HORROR", label: "Sci-Fi Horror" },
+    { value: "HEIST", label: "Heist" },
   ];
 
   const directors = [
@@ -290,14 +290,15 @@ const AddMovies = () => {
         genres: selectedGenres,
         directors: selectedDirectors,
         cast: selectedCast,
-        poster: selectedPosters[0].fileData,
-        trailer: selectedTrailers[0].fileData,
-        movie: selectedMovies[0].fileData,
+        poster: selectedPosters[0].fileData.file,
+        trailer: selectedTrailers[0].fileData.file,
+        movie: selectedMovies[0].fileData.file,
         releaseDate: releaseDate,
         status: data.status,
         description: data.description,
       };
 
+      console.log(details)
       const directorValues = details.directors
         .map((director) => director.value)
         .join(", ");
@@ -311,9 +312,9 @@ const AddMovies = () => {
       formData.append("directors", directorValues);
       formData.append("cast", castValues);
       formData.append("description", details.description);
-      formData.append("poster", details.poster.file);
-      formData.append("trailer", details.trailer.file);
-      formData.append("movie", details.movie.file);
+      formData.append("poster", details.poster);
+      formData.append("trailer", details.trailer);
+      formData.append("movie", details.movie);
       formData.append("releaseDate", details.releaseDate);
       formData.append("status", details.status);
 

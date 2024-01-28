@@ -69,10 +69,12 @@ const movie = createSlice({
       // for multiple movies
       .addCase(fetchMovies.pending, (state) => {
         state.isLoading = true;
+         state.shouldRedirect = false;
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
+         state.shouldRedirect = false;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.isLoading = false;
@@ -82,10 +84,12 @@ const movie = createSlice({
       // for a single movie
       .addCase(fetchMovie.pending, (state) => {
         state.isLoading = true;
+         state.shouldRedirect = false;
       })
       .addCase(fetchMovie.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
+         state.shouldRedirect = false;
       })
       .addCase(fetchMovie.rejected, (state, action) => {
         state.isLoading = false;
