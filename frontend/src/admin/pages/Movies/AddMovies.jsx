@@ -16,7 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createMovie } from "../../../redux/slices/movie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,15 +38,13 @@ const AddMovies = () => {
   } = useForm();
   const navigate = useNavigate();
 
-    const shouldRedirect = useSelector((state) => state.movie.shouldRedirect);
+  const shouldRedirect = useSelector((state) => state.movie.shouldRedirect);
 
-    useEffect(() => {
-      if (shouldRedirect) {
-        // Redirect logic here
-        navigate("/admin/movies");
-      }
-    }, [shouldRedirect, navigate]);
-
+  useEffect(() => {
+    if (shouldRedirect) {
+      navigate("/admin/movies");
+    }
+  }, [shouldRedirect]);
 
   const dispatch = useDispatch();
 
@@ -199,7 +197,7 @@ const AddMovies = () => {
       try {
         const imageUrl = URL.createObjectURL(file);
         const fileData = {
-         file
+          file,
         };
         switch (type) {
           case "poster":
@@ -259,16 +257,17 @@ const AddMovies = () => {
     }
   };
 
-const handleInitialState = () => {
-  setValidationError(null);
-  setSelectedGenres([]);
-  setSelectedDirectors([]);
-  setSelectedCast([]);
-  setSelectedPosters([]);
-  setSelectedTrailers([]);
-  setSelectedMovies([]);
-  setReleaseDate(null);
-};
+  const handleInitialState = () => {
+    setValidationError(null);
+    setSelectedGenres([]);
+    setSelectedDirectors([]);
+    setSelectedCast([]);
+    setSelectedPosters([]);
+    setSelectedTrailers([]);
+    setSelectedMovies([]);
+    setReleaseDate(null);
+  };
+
   const onSubmit = (data, e) => {
     if (selectedGenres.length === 0) {
       setValidationError("noGenres");
@@ -318,29 +317,14 @@ const handleInitialState = () => {
       formData.append("releaseDate", details.releaseDate);
       formData.append("status", details.status);
 
-//     try {
-//   dispatch(createMovie(formData));
+      try {
+        dispatch(createMovie(formData));
+      } catch (error) {
+        console.error("Error dispatching createMovie:", error);
+      }
+    }
+  };
 
-//   const shouldRedirect = useSelector(
-//     (state) => state.createMovie.shouldRedirect
-//   );
-
-//   console.log("shouldRedirect:", shouldRedirect); // Check the value
-
-//   if (shouldRedirect) {
-//     console.log("Navigating to /movies");
-//     navigate("/movies");
-//   }
-// } catch (error) {
-//   console.error("Error dispatching createMovie:", error);
-// }
-try {
-  dispatch(createMovie(formData));
-} catch (error) {
-  console.error("Error dispatching createMovie:", error);
-}
-    }}
- 
   return (
     <>
       <ToastContainer />
@@ -353,7 +337,7 @@ try {
       >
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h6">Add Movies</Typography>
-          <Button variant="contained">
+          <Button variant="contained" onClick={()=>navigate("/admin/movies")}>
             <FaEye className="text-xl mr-2" />
             View Movies
           </Button>

@@ -38,10 +38,25 @@ export const createMovie = createAsyncThunk("createMovie", async (data) => {
     return response.data;
   } catch (error) {
     console.log(error)
-   showSuccessToast("Failed to upload movie");
+   showErrorToast("Failed to upload movie");
   }
 });
 
+// to delete a movie
+export  const deleteMovie = createAsyncThunk('deleteMovie',async(id)=>{
+    try {
+      console.log(id)
+    const response = await api.delete(`/movies/${id}`);
+    if(response.status == 200){
+      showSuccessToast('Movie Deleted successfully')
+    }
+    return response.data;
+  } catch (error) {
+    console.log(error)
+   showErrorToast("Failed to Delete movie");
+  }
+
+})
 const movie = createSlice({
   name: "movie",
   initialState: {
@@ -83,10 +98,28 @@ const movie = createSlice({
       })
       .addCase(createMovie.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.data = action.payload;
-        state.shouldRedirect = true;
+        if (action.payload) {
+          showSuccessToast('Movie created successfully')
+          state.data = action.payload;
+          state.shouldRedirect = true;
+        }
       })
+
       .addCase(createMovie.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        showErrorToast('Failed to create the movie')
+      })
+
+      // for a Deleting a movie
+      .addCase(deleteMovie.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteMovie.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+      })
+      .addCase(deleteMovie.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
       });

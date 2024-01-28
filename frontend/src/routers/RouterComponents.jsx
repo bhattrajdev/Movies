@@ -5,9 +5,7 @@ import { Home, MovieDetail, Login, PageNotFound, Register } from "../pages";
 import AdminLayout from "../admin/AdminLayout";
 import { Dashboard, ViewMovies, AddMovies, Users } from "../admin/pages";
 
-
 const RouterComponents = () => {
- 
   return (
     <>
       <BrowserRouter>

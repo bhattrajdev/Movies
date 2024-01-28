@@ -24,15 +24,23 @@ const getMovie = async (req, res) => {
 
 //to delete a movie
 const deleteMovie = async (req, res) => {
-  const movie = await Movies.findOne(req.params._id);
-  if (movie) {
-    await Movies.deleteOne();
-    res.json({ message: "Movie Removed" });
-  } else {
-    res.status(404);
-    throw new Error("Movie not found");
+  try {
+    console.log(req.params.id)
+    const movie = await Movies.findById(req.params.id);
+
+    console.log(movie)
+    if (movie) {
+      await movie.deleteOne();
+      res.status(200).json({ message: "Movie Removed" });
+    } else {
+      res.status(404).json({ error: "Movie not found" });
+    }
+  } catch (error) {
+    console.error("Error deleting movie:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 // to create a movie
 const createMovie = async (req, res) => {
@@ -67,4 +75,4 @@ console.log(req.body)
 
 
 
-export {getMovies,getMovie,createMovie}
+export { getMovies, getMovie, createMovie, deleteMovie };

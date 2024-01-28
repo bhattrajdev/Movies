@@ -86,3 +86,4 @@ const deleteAndInsertData = async () => {
 
 
 deleteAndInsertData();
+fakeData()

@@ -3,6 +3,7 @@ import {
   getMovie,
   getMovies,
   createMovie,
+  deleteMovie,
 } from "../controllers/movieController.js";
 import { fileUpload } from "../config/fileUpload.js";
 
@@ -20,6 +21,6 @@ router
     createMovie
   );
 
-router.route("/:id").get(getMovie);
+router.route("/:id").get(getMovie).delete(deleteMovie);
 
 export default router;
