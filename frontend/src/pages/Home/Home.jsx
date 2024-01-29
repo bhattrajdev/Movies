@@ -9,7 +9,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.movie.data);
   const loading = useSelector((state) => state.movie.isLoading);
-
   useEffect(() => {
     dispatch(fetchMovies());
   }, [dispatch]);
@@ -17,11 +16,11 @@ const Home = () => {
   return (
     <>
       {loading ? (
-        <Loading />
+        <Loading state={loading} />
       ) : (
-        movies && (
+        movies &&  (
           <div>
-            <Carousel />
+            <Carousel/>
             <div className="px-[40px]">
               {/* for trending movies */}
               <div className="flex justify-between mt-4 mb-4 ">
@@ -33,14 +32,15 @@ const Home = () => {
                 </button>
               </div>
               <Slider {...carouselSettings}>
-                {Array.isArray(movies) ?  movies.map((movie) => (
-                  <Movies key={movie._id} movie={movie} />
-                ))  : ''}
+                {Array.isArray(movies)
+                  ? movies.map((movie) => (
+                      <Movies key={movie._id} movie={movie} />
+                    ))
+                  : ""}
               </Slider>
 
-
-                {/* for trending movies */}
-                <div className="flex justify-between mt-4 mb-4 ">
+              {/* for trending movies */}
+              <div className="flex justify-between mt-4 mb-4 ">
                 <div className="text-[17px] md:text-[19px] lg:text-[21px]">
                   Latest
                 </div>
@@ -49,9 +49,11 @@ const Home = () => {
                 </button>
               </div>
               <Slider {...carouselSettings}>
-                {Array.isArray(movies) ?  movies.map((movie) => (
-                  <Movies key={movie._id} movie={movie} />
-                ))  : ''}
+                {Array.isArray(movies)
+                  ? movies.map((movie) => (
+                      <Movies key={movie._id} movie={movie} />
+                    ))
+                  : ""}
               </Slider>
             </div>
           </div>
