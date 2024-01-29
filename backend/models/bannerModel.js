@@ -10,7 +10,7 @@ const bannerSchema = mongoose.Schema({
     link:{
         type:String
     },
-    startdate:{
+    startDate:{
         type:String
     },
     endDate:{

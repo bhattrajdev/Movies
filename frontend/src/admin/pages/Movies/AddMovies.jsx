@@ -773,6 +773,8 @@ const AddMovies = () => {
               </RadioGroup>
             </Box>
           </Box>
+
+          {/* for buttons */}
           <Box
             sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}
           >
