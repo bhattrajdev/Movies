@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { AiOutlinePlus, AiOutlineCheck } from "react-icons/ai";
 import { fetchMovie } from "../../redux/slices/movie";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../../redux/slices/user";
 import { useParams } from "react-router-dom";
-import { Loading,Player } from "../../components";
+import { Loading, Player } from "../../components";
 import { BiSolidMoviePlay, BiSolidCameraMovie } from "react-icons/bi";
 import api from "../../config/Api";
 
@@ -13,14 +14,23 @@ const MovieDetail = () => {
 
   const dispatch = useDispatch();
   const movieData = useSelector((state) => state.movie.data);
+  const loading = useSelector((state) => state.user.isLoading);
+  const userData = useSelector((state) => state.user.data);
+  const userid = localStorage.getItem("id");
 
   useEffect(() => {
     dispatch(fetchMovie(id));
+    if (userid != null) {
+      dispatch(fetchUser(userid));
+    }
   }, [dispatch, id]);
+
+  console.log(movieData);
 
   return (
     <>
-      {movieData ? (
+      <Loading state={loading} />
+      {movieData && userData ? (
         <div className="bg-cover bg-no-repeat bg-center relative mt-[-64px]">
           <img
             src={`${api.defaults.baseURL}/${movieData.poster}`}
@@ -41,7 +51,7 @@ const MovieDetail = () => {
                 {movieData.title}
               </h1>
 
-              <div className="text-base lg:text-lg mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
+              <div className="text-base lg:text-lg mb-1 lg:mb-2 xl:mb-3 2xl:mb-3">
                 <p className="flex items-center">
                   <AiOutlinePlus className="mr-2 text-xl" />
                   {movieData.releaseDate}
@@ -52,11 +62,7 @@ const MovieDetail = () => {
                 </p>
               </div>
 
-              <p className="text-gray-300 text-sm lg:text-base mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
-                {movieData.description}
-              </p>
-
-              <div className="text-base lg:text-lg mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
+              <div className="text-base lg:text-lg mb-1 lg:mb-2 xl:mb-3 2xl:mb-3">
                 <p>
                   <strong>Genre:</strong>{" "}
                   {Array.isArray(movieData.genres)
@@ -65,7 +71,7 @@ const MovieDetail = () => {
                 </p>
               </div>
 
-              <div className="text-base lg:text-lg mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
+              <div className="text-base lg:text-lg mb-1 lg:mb-2 xl:mb-3 2xl:mb-3">
                 <p>
                   <strong>Cast:</strong>{" "}
                   {Array.isArray(movieData.cast)
@@ -82,6 +88,9 @@ const MovieDetail = () => {
                     : movieData.directors}
                 </p>
               </div>
+              <p className="text-gray-300 text-sm lg:text-base mb-2 lg:mb-4 xl:mb-6 2xl:mb-8">
+                {movieData.description}
+              </p>
 
               <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4">
                 <Link
@@ -90,12 +99,15 @@ const MovieDetail = () => {
                 >
                   <BiSolidMoviePlay className="text-2xl mr-2" /> Watch Trailer
                 </Link>
-                <Link
-                  to={`/player/${movieData._id}`}
-                  className="bg-red-500 text-white flex px-4 py-2 rounded-lg hover:bg-red-600"
-                >
-                  <BiSolidCameraMovie className="text-2xl mr-2" /> Watch Movie
-                </Link>
+
+                {userData.isAdmin || movieData.status === "public" ? (
+                  <Link
+                    to={`/player/${movieData._id}`}
+                    className="bg-red-500 text-white flex px-4 py-2 rounded-lg hover:bg-red-600"
+                  >
+                    <BiSolidCameraMovie className="text-2xl mr-2" /> Watch Movie
+                  </Link>
+                ) : null}
               </div>
             </div>
           </div>

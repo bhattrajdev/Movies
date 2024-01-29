@@ -33,7 +33,7 @@ const getUsers = async (req, res) => {
 
 // getting a single user
 const getUser = async (req, res) => {
-  const user = await User.findOne(req.params.id);
+  const user = await User.findById(req.params.id);
   if (user) {
     res.status(200);
     res.json(user);

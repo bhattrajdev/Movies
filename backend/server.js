@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import cors from "cors";
-import userRoute from "./routes/movieRoutes.js";
+import userRoute from './routes/userRoutes.js'
 import movieRoute from "./routes/movieRoutes.js";
 import bannerRoute from "./routes/bannerRoutes.js";
 

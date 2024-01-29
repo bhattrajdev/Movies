@@ -12,9 +12,20 @@ export const userLogin = createAsyncThunk("userLogin", async (data) => {
       email: data.email,
       password: data.password,
     });
-    localStorage.setItem("token",response.data.token)
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("id", response.data._id);
     return response.data;
   } catch (error) {
+    throw error;
+  }
+});
+
+export const fetchUser = createAsyncThunk("fetchuser", async (id) => {
+  try {
+    const response = await api.get(`user/${id}`);
+    return response.data;
+  } catch (error) {
+    showErrorToast("Error !! Please try again");
     throw error;
   }
 });
@@ -37,12 +48,26 @@ const user = createSlice({
         state.isLoading = false;
         showSuccessToast("Login successful");
         state.data = action.payload;
-        state.shouldRedirect = true; 
+        state.shouldRedirect = true;
       })
       .addCase(userLogin.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         showErrorToast("Invalid Credentials !!!");
+      })
+      // for a single user
+      .addCase(fetchUser.pending, (state) => {
+        state.isLoading = true;
+        state.shouldRedirect = false;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+        state.shouldRedirect = false;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
       });
   },
 });
