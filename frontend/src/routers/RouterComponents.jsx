@@ -9,7 +9,7 @@ import {
   AddMovies,
   Users,
   ViewBanner,
-  AddBanner
+  AddBanner,
 } from "../admin/pages";
 
 const RouterComponents = () => {
@@ -32,9 +32,11 @@ const RouterComponents = () => {
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
+
             {/* routes related to movies */}
             <Route path="movies" element={<ViewMovies />} />
             <Route path="add_movies" element={<AddMovies />} />
+
             {/* routes related to banner */}
             <Route path="banner" element={<ViewBanner />} />
             <Route path="add_banner" element={<AddBanner />} />
