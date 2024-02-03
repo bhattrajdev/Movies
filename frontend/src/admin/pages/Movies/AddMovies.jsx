@@ -298,7 +298,7 @@ const AddMovies = () => {
         description: data.description,
       };
 
-      console.log(details)
+      console.log(details);
       const directorValues = details.directors
         .map((director) => director.value)
         .join(", ");
@@ -338,7 +338,7 @@ const AddMovies = () => {
       >
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h6">Add Movies</Typography>
-          <Button variant="contained" onClick={()=>navigate("/admin/movies")}>
+          <Button variant="contained" onClick={() => navigate("/admin/movies")}>
             <FaEye className="text-xl mr-2" />
             View Movies
           </Button>
@@ -349,7 +349,7 @@ const AddMovies = () => {
         elevation={5}
         sx={{
           padding: "20px",
-          margin: "10px auto",
+          marginTop: "10px",
         }}
       >
         <Box

@@ -9,7 +9,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { FaPlus,  FaEdit, FaTrash } from "react-icons/fa";
+import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchBanner,
@@ -28,7 +28,7 @@ const ViewBanner = () => {
   const banner = useSelector((state) => state.banner.data);
   const loading = useSelector((state) => state.banner.isLoading);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchBanners());
   }, [dispatch]);
@@ -104,7 +104,7 @@ const ViewBanner = () => {
           <Button
             variant="contained"
             onClick={() => {
-                navigate("/admin/add_banner");
+              navigate("/admin/banner/add_banner");
             }}
           >
             <FaPlus className="text-xl mr-2" />
@@ -117,47 +117,43 @@ const ViewBanner = () => {
         elevation={3}
         sx={{
           padding: "20px",
-          margin: "10px 0 auto",
+          margin: "10px 0",
         }}
       >
-        {Array.isArray(banner) ? (
-          banner.length > 0 ? (
-            <>
-              <Paper
-                elevation={3}
-                sx={{
-                  padding: "20px",
-                  margin: "10px 0 auto",
-                }}
-              >
-                <div style={{ height: 630, width: "100%" }}>
-                  <DataGrid
-                    rows={banner.map((banner, index) => ({
-                      id: index + 1,
-                      _id: banner._id,
-                      image: banner.image,
-                      title: banner.title,
-                      startDate: banner.startDate,
-                      endDate: banner.endDate,
-                    }))}
-                    columns={columns}
-                    pageSize={10}
-                    initialState={{
-                      pagination: {
-                        paginationModel: { page: 0, pageSize: 10 },
-                      },
-                    }}
-                    pageSizeOptions={[10, 25, 50, 100]}
-                    getRowId={(row) => row._id}
-                  />
-                </div>
-              </Paper>
-            </>
-          ) : (
-            <>No Banner available.</>
-          )
+        {!(Array.isArray(banner) && banner.length > 0) ? (
+          <>No Banner available.</>
         ) : (
-          <></>
+          <>
+            <Paper
+              elevation={3}
+              sx={{
+                padding: "20px",
+                margin: "10px 0 auto",
+              }}
+            >
+              <div style={{ height: 630, width: "100%" }}>
+                <DataGrid
+                  rows={banner.map((banner, index) => ({
+                    id: index + 1,
+                    _id: banner._id,
+                    image: banner.image,
+                    title: banner.title,
+                    startDate: banner.startDate,
+                    endDate: banner.endDate,
+                  }))}
+                  columns={columns}
+                  pageSize={10}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 10 },
+                    },
+                  }}
+                  pageSizeOptions={[10, 25, 50, 100]}
+                  getRowId={(row) => row._id}
+                />
+              </div>
+            </Paper>
+          </>
         )}
       </Paper>
     </>

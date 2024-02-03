@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import {
-  TextField,
-  Box,
-  Button,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { TextField, Box, Button, Paper, Typography } from "@mui/material";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -15,6 +9,7 @@ import { createBanner } from "../../../redux/slices/banner";
 
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router";
+import { showSuccessToast } from "../../../pages/Errors/ToastError/ToastError";
 const AddBanner = () => {
   const {
     reset,
@@ -27,14 +22,15 @@ const AddBanner = () => {
   const [selectedBanner, setSelectedBanner] = useState([]);
   const [validationError, setValidationError] = useState(null);
 
-  const dispatch = useDispatch()
-const shouldRedirect = useSelector((state) => state.banner.shouldRedirect);
+  const dispatch = useDispatch();
+  const shouldRedirect = useSelector((state) => state.banner.shouldRedirect);
 
-useEffect(() => {
-  if (shouldRedirect) {
-    navigate("/admin/banner");
-  }
-}, [shouldRedirect]);
+  useEffect(() => {
+    if (shouldRedirect) {
+      showSuccessToast("Banner Added Successfully");
+      navigate("/admin/banner/view_banner");
+    }
+  }, [shouldRedirect]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -75,12 +71,12 @@ useEffect(() => {
       formData.append("image", image);
       formData.append("startDate", data.startDate);
       formData.append("endDate", data.endDate);
-  
-     try {
-       dispatch(createBanner(formData));
-     } catch (error) {
-       console.error("Error dispatching createbanner:", error);
-     }
+
+      try {
+        dispatch(createBanner(formData));
+      } catch (error) {
+        console.error("Error dispatching createbanner:", error);
+      }
     }
   };
   return (

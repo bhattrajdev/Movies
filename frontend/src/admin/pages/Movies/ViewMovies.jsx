@@ -34,7 +34,7 @@ const ViewMovies = () => {
     const response = window.confirm("Are you sure?");
     if (response) {
       dispatch(deleteMovie(id));
-      dispatch(fetchMovies())
+      dispatch(fetchMovies());
     }
   };
 
@@ -106,17 +106,16 @@ const ViewMovies = () => {
           </Button>
         </Box>
       </Paper>
-
-      {Array.isArray(movies) ? (
-        movies.length > 0 ? (
-          <>
-            <Paper
-              elevation={3}
-              sx={{
-                padding: "20px",
-                margin: "10px 0 auto",
-              }}
-            >
+      <Paper
+        elevation={3}
+        sx={{
+          padding: "20px",
+          margin: "10px 0 auto",
+        }}
+      >
+        {Array.isArray(movies) ? (
+          movies.length > 0 ? (
+            <>
               <div style={{ height: 630, width: "100%" }}>
                 <DataGrid
                   rows={movies.map((movie, index) => ({
@@ -138,17 +137,16 @@ const ViewMovies = () => {
                   getRowId={(row) => row._id}
                 />
               </div>
-            </Paper>
-          </>
+            </>
+          ) : (
+            <>No movies available.</>
+          )
         ) : (
-          <>No movies available.</>
-        )
-      ) : (
-        <></>
-      )}
+          <></>
+        )}
+      </Paper>
     </>
   );
-
 };
 
 export default ViewMovies;

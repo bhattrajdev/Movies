@@ -6,6 +6,7 @@ import {
   showErrorToast,
 } from "../../pages/Errors/ToastError/ToastError";
 
+// code for user login
 export const userLogin = createAsyncThunk("userLogin", async (data) => {
   try {
     const response = await api.post(`/user/login`, {
@@ -20,6 +21,7 @@ export const userLogin = createAsyncThunk("userLogin", async (data) => {
   }
 });
 
+// code to fetch user
 export const fetchUser = createAsyncThunk("fetchuser", async (id) => {
   try {
     const response = await api.get(`user/${id}`);
@@ -27,6 +29,32 @@ export const fetchUser = createAsyncThunk("fetchuser", async (id) => {
   } catch (error) {
     showErrorToast("Error !! Please try again");
     throw error;
+  }
+});
+
+// code to fetch users
+export const fetchUsers = createAsyncThunk("fetchusers", async (id) => {
+  try {
+    const response = await api.get(`user/`);
+    return response.data;
+  } catch (error) {
+    showErrorToast("Error fetching users !! Please try again");
+    throw error;
+  }
+});
+
+// code to delete user
+export const deleteUser = createAsyncThunk("deleteuser", async (id) => {
+  try {
+    console.log(id);
+    const response = await api.delete(`/user/${id}`);
+    if (response.status == 200) {
+      showSuccessToast("User Deleted successfully");
+    }
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    showErrorToast("Failed to Delete User");
   }
 });
 
@@ -55,7 +83,7 @@ const user = createSlice({
         state.isError = true;
         showErrorToast("Invalid Credentials !!!");
       })
-      // for a single user
+      // for fetching single user
       .addCase(fetchUser.pending, (state) => {
         state.isLoading = true;
         state.shouldRedirect = false;
@@ -66,6 +94,34 @@ const user = createSlice({
         state.shouldRedirect = false;
       })
       .addCase(fetchUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      // for fetching users
+      .addCase(fetchUsers.pending, (state) => {
+        state.isLoading = true;
+        state.shouldRedirect = false;
+      })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+        state.shouldRedirect = false;
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      // for deleting users
+      .addCase(deleteUser.pending, (state) => {
+        state.isLoading = true;
+        state.shouldRedirect = false;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+        state.shouldRedirect = false;
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
       });

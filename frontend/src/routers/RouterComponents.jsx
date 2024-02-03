@@ -7,7 +7,7 @@ import {
   Dashboard,
   ViewMovies,
   AddMovies,
-  Users,
+  ViewUser,
   ViewBanner,
   AddBanner,
 } from "../admin/pages";
@@ -33,15 +33,19 @@ const RouterComponents = () => {
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
 
-            {/* routes related to movies */}
-            <Route path="movies" element={<ViewMovies />} />
-            <Route path="add_movies" element={<AddMovies />} />
+            {/* Routes related to movies */}
+            <Route path="movies">
+              <Route path="view_movies" element={<ViewMovies />} />
+              <Route path="add_movies" element={<AddMovies />} />
+            </Route>
 
-            {/* routes related to banner */}
-            <Route path="banner" element={<ViewBanner />} />
-            <Route path="add_banner" element={<AddBanner />} />
+            {/* Routes related to banner */}
+            <Route path="banner">
+              <Route path="view_banner" element={<ViewBanner />} />
+              <Route path="add_banner" element={<AddBanner />} />
+            </Route>
 
-            <Route path="user" element={<Users />} />
+            <Route path="user/view_user" element={<ViewUser />} />
           </Route>
         </Routes>
       </BrowserRouter>

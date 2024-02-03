@@ -127,6 +127,13 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               />
             </svg>
           </NavLink>
+
+          {sidebarExpanded && (
+            <>
+              {" "}
+              <div className="text-xl ml-1 text-white">DEV CMS (MOVIES)</div>
+            </>
+          )}
         </div>
 
         {/* Links */}
@@ -144,20 +151,20 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 Pages
               </span>
             </h3>
+            {/* CODE FOR DASHBOARD */}
             <ul className="mt-3">
-              {/* Dashboard */}
               <SidebarLinkGroup
-                activecondition={
-                  pathname === "/" || pathname.includes("dashboard")
+                activecondition={(currentPath) =>
+                  currentPath.includes("/admin")
                 }
               >
                 {(handleClick, open) => {
                   return (
                     <>
                       <a
-                        href="#0"
+                        href="/admin"
                         className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname === "/" || pathname.includes("dashboard")
+                          pathname === "admin"
                             ? "hover:text-slate-200"
                             : "hover:text-white"
                         }`}
@@ -176,8 +183,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             >
                               <path
                                 className={`fill-current ${
-                                  pathname === "/admin" ||
-                                  pathname.includes("dashboard")
+                                  pathname === "/"
                                     ? "text-indigo-500"
                                     : "text-slate-400"
                                 }`}
@@ -185,8 +191,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                               <path
                                 className={`fill-current ${
-                                  pathname === "/" ||
-                                  pathname.includes("dashboard")
+                                  pathname === "/"
                                     ? "text-indigo-600"
                                     : "text-slate-600"
                                 }`}
@@ -194,8 +199,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                               <path
                                 className={`fill-current ${
-                                  pathname === "/" ||
-                                  pathname.includes("dashboard")
+                                  pathname === "/"
                                     ? "text-indigo-200"
                                     : "text-slate-400"
                                 }`}
@@ -214,32 +218,21 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 }}
               </SidebarLinkGroup>
             </ul>
-          </div>
-          {/* More group */}
-          <div>
-            <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
-              <span
-                className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
-                aria-hidden="true"
-              >
-                •••
-              </span>
-              <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                More
-              </span>
-            </h3>
-            <ul className="mt-3">
-              {/* Components */}
+
+            {/* CODE FOR MOVIES */}
+            <ul className="mt-2">
               <SidebarLinkGroup
-                activecondition={pathname.includes("component")}
+                activecondition={(currentPath) =>
+                  currentPath.includes("movies")
+                }
               >
                 {(handleClick, open) => {
                   return (
-                    <React.Fragment>
+                    <>
                       <a
                         href="#0"
                         className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname.includes("component")
+                          pathname.includes("movies")
                             ? "hover:text-slate-200"
                             : "hover:text-white"
                         }`}
@@ -258,7 +251,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             >
                               <circle
                                 className={`fill-current ${
-                                  pathname.includes("component")
+                                  pathname.includes("movies")
                                     ? "text-indigo-500"
                                     : "text-slate-600"
                                 }`}
@@ -268,7 +261,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                               <circle
                                 className={`fill-current ${
-                                  pathname.includes("component")
+                                  pathname.includes("movies")
                                     ? "text-indigo-300"
                                     : "text-slate-400"
                                 }`}
@@ -278,7 +271,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               />
                             </svg>
                             <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Components
+                              Movies
                             </span>
                           </div>
                           {/* Icon */}
@@ -299,7 +292,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/component/button"
+                              to="movies/add_movies"
                               className={({ isActive }) =>
                                 "block transition duration-150 truncate " +
                                 (isActive
@@ -308,14 +301,14 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               }
                             >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Button
+                                Add Movies
                               </span>
                             </NavLink>
                           </li>
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="/component/form"
+                              to="movies/view_movies"
                               className={({ isActive }) =>
                                 "block transition duration-150 truncate " +
                                 (isActive
@@ -324,189 +317,124 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                               }
                             >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Input Form
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/dropdown"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Dropdown
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/alert"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Alert & Banner
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/modal"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Modal
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/pagination"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Pagination
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/tabs"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Tabs
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/breadcrumb"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Breadcrumb
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/badge"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Badge
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/avatar"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Avatar
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/tooltip"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Tooltip
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/accordion"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Accordion
-                              </span>
-                            </NavLink>
-                          </li>
-                          <li className="mb-1 last:mb-0">
-                            <NavLink
-                              end
-                              to="/component/icons"
-                              className={({ isActive }) =>
-                                "block transition duration-150 truncate " +
-                                (isActive
-                                  ? "text-indigo-500"
-                                  : "text-slate-400 hover:text-slate-200")
-                              }
-                            >
-                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                Icons
+                                View Movies
                               </span>
                             </NavLink>
                           </li>
                         </ul>
                       </div>
-                    </React.Fragment>
+                    </>
+                  );
+                }}
+              </SidebarLinkGroup>
+            </ul>
+
+            {/* CODE FOR BANNER */}
+            <ul className="mt-2">
+              <SidebarLinkGroup
+                activecondition={(currentPath) =>
+                  currentPath.includes("/admin/banner") ||
+                  currentPath.includes("/admin/banner")
+                }
+              >
+                {(handleClick, open) => {
+                  return (
+                    <>
+                      <a
+                        href="#0"
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname.includes("movies")
+                            ? "hover:text-slate-200"
+                            : "hover:text-white"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
+                        }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <svg
+                              className="shrink-0 h-6 w-6"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className={`fill-current ${
+                                  pathname.includes("banner")
+                                    ? "text-indigo-500"
+                                    : "text-slate-600"
+                                }`}
+                                cx="16"
+                                cy="8"
+                                r="8"
+                              />
+                              <circle
+                                className={`fill-current ${
+                                  pathname.includes("banner")
+                                    ? "text-indigo-300"
+                                    : "text-slate-400"
+                                }`}
+                                cx="8"
+                                cy="16"
+                                r="8"
+                              />
+                            </svg>
+                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                              Banner
+                            </span>
+                          </div>
+                          {/* Icon */}
+                          <div className="flex shrink-0 ml-2">
+                            <svg
+                              className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${
+                                open && "rotate-180"
+                              }`}
+                              viewBox="0 0 12 12"
+                            >
+                              <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                            </svg>
+                          </div>
+                        </div>
+                      </a>
+                      <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                        <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
+                          <li className="mb-1 last:mb-0">
+                            <NavLink
+                              end
+                              to="banner/add_banner"
+                              className={({ isActive }) =>
+                                "block transition duration-150 truncate " +
+                                (isActive
+                                  ? "text-indigo-500"
+                                  : "text-slate-400 hover:text-slate-200")
+                              }
+                            >
+                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                Add Banner
+                              </span>
+                            </NavLink>
+                          </li>
+                          <li className="mb-1 last:mb-0">
+                            <NavLink
+                              end
+                              to="banner/view_banner"
+                              className={({ isActive }) =>
+                                "block transition duration-150 truncate " +
+                                (isActive
+                                  ? "text-indigo-500"
+                                  : "text-slate-400 hover:text-slate-200")
+                              }
+                            >
+                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                View Banner
+                              </span>
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </div>
+                    </>
                   );
                 }}
               </SidebarLinkGroup>
