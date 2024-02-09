@@ -5,7 +5,7 @@ import Header from "../layout/Header";
 import { Outlet } from "react-router-dom";
 
 function Layout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
     <div className="flex h-screen overflow-hidden">

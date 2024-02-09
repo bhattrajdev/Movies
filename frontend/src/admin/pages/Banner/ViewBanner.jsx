@@ -11,12 +11,7 @@ import {
 } from "@mui/material";
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchBanner,
-  fetchBanners,
-  deleteBanner,
-  createBanner,
-} from "../../../redux/slices/banner";
+import { fetchBanners, deleteBanner } from "../../../redux/slices/banner";
 import { Loading } from "../../../components";
 import { DataGrid } from "@mui/x-data-grid";
 import api from "../../../config/Api";
@@ -32,6 +27,15 @@ const ViewBanner = () => {
   useEffect(() => {
     dispatch(fetchBanners());
   }, [dispatch]);
+
+  const currentDate = new Date();
+
+  const month = currentDate.getMonth() + 1;
+  const day = currentDate.getDate();
+  const year = currentDate.getFullYear();
+  const formattedMonth = month < 10 ? `0${month}` : month;
+  const formattedDay = day < 10 ? `0${day}` : day;
+  const formattedDate = `${year}-${formattedMonth}-${formattedDay}`;
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
@@ -50,6 +54,27 @@ const ViewBanner = () => {
     { field: "title", headerName: "Title", width: 200 },
     { field: "startDate", headerName: "Start Date", width: 200 },
     { field: "endDate", headerName: "End Date", width: 200 },
+
+    {
+      field: "active",
+      headerName: "Active",
+      width: 100,
+      renderCell: (params) => {
+        const startDate = params.row.startDate;
+        const endDate = params.row.endDate;
+        console.log(`Start Date ${startDate}`);
+        console.log(`End Date ${endDate}`);
+        console.log(`Current Date ${formattedDate}`);
+        const isActive = formattedDate >= startDate && formattedDate <= endDate;
+
+        console.log(`isActive ${isActive}`);
+        return (
+          <span style={{ color: isActive ? "green" : "red" }}>
+            {isActive ? "Active" : "Inactive"}
+          </span>
+        );
+      },
+    },
 
     {
       field: "action",

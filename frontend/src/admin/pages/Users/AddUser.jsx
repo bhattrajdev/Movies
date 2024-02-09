@@ -10,7 +10,7 @@ import { createBanner } from "../../../redux/slices/banner";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router";
 import { showSuccessToast } from "../../../pages/Errors/ToastError/ToastError";
-const AddBanner = () => {
+const AddUser = () => {
   const {
     reset,
     register,
@@ -90,11 +90,8 @@ const AddBanner = () => {
         }}
       >
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6">Add Banner</Typography>
-          <Button
-            variant="contained"
-            onClick={() => navigate("/admin/banner/view_banner")}
-          >
+          <Typography variant="h6">Add User</Typography>
+          <Button variant="contained" onClick={() => navigate("/admin/banner")}>
             <FaEye className="text-xl mr-2" />
             View Banner
           </Button>
@@ -317,4 +314,4 @@ const AddBanner = () => {
   );
 };
 
-export default AddBanner;
+export default AddUser;

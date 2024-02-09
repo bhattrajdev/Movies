@@ -5,7 +5,8 @@ function SidebarLinkGroup({ children, activecondition }) {
   const { pathname } = useLocation();
 
   const lastPathSegment = pathname.substring(pathname.lastIndexOf("/") + 1);
-  const isActive = lastPathSegment === "admin" || activecondition(pathname);
+  const isActive = lastPathSegment === activecondition(pathname);
+  console.log(isActive);
 
   console.log(`Is Active ${isActive}`);
   console.log(pathname);

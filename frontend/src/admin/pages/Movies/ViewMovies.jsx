@@ -98,7 +98,7 @@ const ViewMovies = () => {
           <Button
             variant="contained"
             onClick={() => {
-              navigate("/admin/add_movies");
+              navigate("/admin/movies/add_movies");
             }}
           >
             <FaPlus className="text-xl mr-2" />

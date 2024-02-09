@@ -42,7 +42,7 @@ const AddMovies = () => {
 
   useEffect(() => {
     if (shouldRedirect) {
-      navigate("/admin/movies");
+      navigate("/admin/movies/view_movies");
     }
   }, [shouldRedirect]);
 
@@ -338,7 +338,10 @@ const AddMovies = () => {
       >
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h6">Add Movies</Typography>
-          <Button variant="contained" onClick={() => navigate("/admin/movies")}>
+          <Button
+            variant="contained"
+            onClick={() => navigate("/admin/movies/view_movies")}
+          >
             <FaEye className="text-xl mr-2" />
             View Movies
           </Button>

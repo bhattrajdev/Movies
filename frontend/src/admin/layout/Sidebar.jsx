@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-
+import { FaUsers } from "react-icons/fa";
+import { PiFlagBannerFill } from "react-icons/pi";
+import { MdMovie } from "react-icons/md";
 import SidebarLinkGroup from "./SidebarLinkGroup";
+import { BiSolidUpArrow } from "react-icons/bi";
+import { AiFillDashboard } from "react-icons/ai";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
@@ -155,14 +159,14 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             <ul className="mt-3">
               <SidebarLinkGroup
                 activecondition={(currentPath) =>
-                  currentPath.includes("/admin")
+                  currentPath.includes("/admin/dashboard")
                 }
               >
                 {(handleClick, open) => {
                   return (
                     <>
                       <a
-                        href="/admin"
+                        href="/admin/dashboard"
                         className={`block text-slate-200 truncate transition duration-150 ${
                           pathname === "admin"
                             ? "hover:text-slate-200"
@@ -172,40 +176,18 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                           e.preventDefault();
                           sidebarExpanded
                             ? handleClick()
-                            : setSidebarExpanded(true);
+                            : setSidebarExpanded(false);
                         }}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
-                            <svg
-                              className="shrink-0 h-6 w-6"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                className={`fill-current ${
-                                  pathname === "/"
-                                    ? "text-indigo-500"
-                                    : "text-slate-400"
-                                }`}
-                                d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z"
-                              />
-                              <path
-                                className={`fill-current ${
-                                  pathname === "/"
-                                    ? "text-indigo-600"
-                                    : "text-slate-600"
-                                }`}
-                                d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z"
-                              />
-                              <path
-                                className={`fill-current ${
-                                  pathname === "/"
-                                    ? "text-indigo-200"
-                                    : "text-slate-400"
-                                }`}
-                                d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z"
-                              />
-                            </svg>
+                            <AiFillDashboard
+                              className={`text-2xl ${
+                                pathname.includes("/dashboard")
+                                  ? "text-indigo-500"
+                                  : "text-slate-400"
+                              }`}
+                            />
                             <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                               Dashboard
                             </span>
@@ -245,45 +227,24 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
-                            <svg
-                              className="shrink-0 h-6 w-6"
-                              viewBox="0 0 24 24"
-                            >
-                              <circle
-                                className={`fill-current ${
-                                  pathname.includes("movies")
-                                    ? "text-indigo-500"
-                                    : "text-slate-600"
-                                }`}
-                                cx="16"
-                                cy="8"
-                                r="8"
-                              />
-                              <circle
-                                className={`fill-current ${
-                                  pathname.includes("movies")
-                                    ? "text-indigo-300"
-                                    : "text-slate-400"
-                                }`}
-                                cx="8"
-                                cy="16"
-                                r="8"
-                              />
-                            </svg>
+                            <MdMovie
+                              className={`text-2xl ${
+                                pathname.includes("movies")
+                                  ? "text-indigo-500"
+                                  : "text-slate-400"
+                              }`}
+                            />
                             <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                               Movies
                             </span>
                           </div>
                           {/* Icon */}
                           <div className="flex shrink-0 ml-2">
-                            <svg
+                            <BiSolidUpArrow
                               className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${
                                 open && "rotate-180"
                               }`}
-                              viewBox="0 0 12 12"
-                            >
-                              <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
-                            </svg>
+                            />
                           </div>
                         </div>
                       </a>
@@ -333,8 +294,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             <ul className="mt-2">
               <SidebarLinkGroup
                 activecondition={(currentPath) =>
-                  currentPath.includes("/admin/banner") ||
-                  currentPath.includes("/admin/banner")
+                  currentPath.includes("banner")
                 }
               >
                 {(handleClick, open) => {
@@ -343,7 +303,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       <a
                         href="#0"
                         className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname.includes("movies")
+                          pathname.includes("banner")
                             ? "hover:text-slate-200"
                             : "hover:text-white"
                         }`}
@@ -356,45 +316,24 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
-                            <svg
-                              className="shrink-0 h-6 w-6"
-                              viewBox="0 0 24 24"
-                            >
-                              <circle
-                                className={`fill-current ${
-                                  pathname.includes("banner")
-                                    ? "text-indigo-500"
-                                    : "text-slate-600"
-                                }`}
-                                cx="16"
-                                cy="8"
-                                r="8"
-                              />
-                              <circle
-                                className={`fill-current ${
-                                  pathname.includes("banner")
-                                    ? "text-indigo-300"
-                                    : "text-slate-400"
-                                }`}
-                                cx="8"
-                                cy="16"
-                                r="8"
-                              />
-                            </svg>
+                            <PiFlagBannerFill
+                              className={`text-2xl ${
+                                pathname.includes("banner")
+                                  ? "text-indigo-500"
+                                  : "text-slate-400"
+                              }`}
+                            />
                             <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                               Banner
                             </span>
                           </div>
                           {/* Icon */}
                           <div className="flex shrink-0 ml-2">
-                            <svg
+                            <BiSolidUpArrow
                               className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${
                                 open && "rotate-180"
                               }`}
-                              viewBox="0 0 12 12"
-                            >
-                              <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
-                            </svg>
+                            />
                           </div>
                         </div>
                       </a>
@@ -429,6 +368,93 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                             >
                               <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                 View Banner
+                              </span>
+                            </NavLink>
+                          </li>
+                        </ul>
+                      </div>
+                    </>
+                  );
+                }}
+              </SidebarLinkGroup>
+            </ul>
+
+            {/* CODE FOR USER */}
+            <ul className="mt-2">
+              <SidebarLinkGroup
+                activecondition={(currentPath) => currentPath.includes("user")}
+              >
+                {(handleClick, open) => {
+                  return (
+                    <>
+                      <a
+                        href="#0"
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname.includes("user")
+                            ? "hover:text-slate-200"
+                            : "hover:text-white"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          sidebarExpanded
+                            ? handleClick()
+                            : setSidebarExpanded(true);
+                        }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <FaUsers
+                              className={`text-2xl ${
+                                pathname.includes("user")
+                                  ? "text-indigo-500"
+                                  : "text-slate-400"
+                              }`}
+                            />
+                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                              User
+                            </span>
+                          </div>
+                          {/* Icon */}
+                          <div className="flex shrink-0 ml-2">
+                            <BiSolidUpArrow
+                              className={`w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 ${
+                                open && "rotate-180"
+                              }`}
+                            />
+                          </div>
+                        </div>
+                      </a>
+                      <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                        <ul className={`pl-9 mt-1 ${!open && "hidden"}`}>
+                          <li className="mb-1 last:mb-0">
+                            <NavLink
+                              end
+                              to="user/add_user"
+                              className={({ isActive }) =>
+                                "block transition duration-150 truncate " +
+                                (isActive
+                                  ? "text-indigo-500"
+                                  : "text-slate-400 hover:text-slate-200")
+                              }
+                            >
+                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                Add User
+                              </span>
+                            </NavLink>
+                          </li>
+                          <li className="mb-1 last:mb-0">
+                            <NavLink
+                              end
+                              to="user/view_user"
+                              className={({ isActive }) =>
+                                "block transition duration-150 truncate " +
+                                (isActive
+                                  ? "text-indigo-500"
+                                  : "text-slate-400 hover:text-slate-200")
+                              }
+                            >
+                              <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                View User
                               </span>
                             </NavLink>
                           </li>
